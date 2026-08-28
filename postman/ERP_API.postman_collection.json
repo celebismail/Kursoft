@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "126d7455-44ef-43a4-8bdd-64ba1d2d085b",
-    "name": "[ŞİRKET ADI] ERP Entegrasyon API'leri",
-    "description": "[ŞİRKET ADI] ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma (Order/CreateOrder)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi (Customer/Customerlist)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: [destek e-postası] · [şirket web sitesi]",
+    "name": "KURSOFT ERP Entegrasyon API'leri",
+    "description": "KURSOFT ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma (Order/CreateOrder)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi (Customer/Customerlist)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: destek@kursoft.com.tr · kursoft.com.tr",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {

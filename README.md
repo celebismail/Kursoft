@@ -1,5 +1,4 @@
 <p align="center">
-  <!-- Logo eklemek için: <img src="docs/assets/logo.png" width="160" alt="KURSOFT logo" /> -->
   <h1 align="center">KURSOFT ERP Entegrasyon API'leri</h1>
   <p align="center">Sipariş, ödeme ve müşteri verilerinizi ERP sistemimizle entegre etmek için referans API dokümanları ve Postman koleksiyonu.</p>
 </p>
@@ -15,7 +14,7 @@
 
 ## Genel Bakış
 
-Bu repo, KURSOFT ERP sistemine entegre olmak isteyen partnerler ve geliştiriciler için:
+Bu repo, **KURSOFT** ERP sistemine entegre olmak isteyen partnerler ve geliştiriciler için:
 
 - Her endpoint'in alan/tip/zorunluluk açıklamalarını içeren **referans dokümanları** (`docs/`)
 - Uçtan uca test edilebilir, örnek request/response'larla hazır **Postman koleksiyonu** (`postman/`)
@@ -87,7 +86,7 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 
 ## Destek
 
-Entegrasyon sırasında sorularınız için: destek@kursoft.com.tr
+Entegrasyon sırasında sorularınız için: **destek@kursoft.com.tr**
 
 ---
 
