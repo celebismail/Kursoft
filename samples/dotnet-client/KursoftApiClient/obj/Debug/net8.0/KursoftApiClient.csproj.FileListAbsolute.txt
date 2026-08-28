@@ -1,0 +1,15 @@
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\bin\Debug\net8.0\appsettings.json
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\bin\Debug\net8.0\KursoftApiClient.exe
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\bin\Debug\net8.0\KursoftApiClient.deps.json
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\bin\Debug\net8.0\KursoftApiClient.runtimeconfig.json
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\bin\Debug\net8.0\KursoftApiClient.dll
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\bin\Debug\net8.0\KursoftApiClient.pdb
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.AssemblyInfoInputs.cache
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.AssemblyInfo.cs
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.csproj.CoreCompileInputs.cache
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.dll
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\refint\KursoftApiClient.dll
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.pdb
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\KursoftApiClient.genruntimeconfig.cache
+C:\Users\ismai\Downloads\erp-api-integration-repo (3)\repo\samples\dotnet-client\KursoftApiClient\obj\Debug\net8.0\ref\KursoftApiClient.dll

@@ -69,11 +69,21 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 │   ├── OrderList_API_Dokumani.docx
 │   ├── PaymentCreate_API_Dokumani.docx
 │   └── Customerlist_API_Dokumani.docx
-└── postman/
-    ├── ERP_API.postman_collection.json    # Ana koleksiyon (endpoint'ler, örnek response'larla)
-    └── environments/
-        └── Test.postman_environment.json  # baseURL / kullanıcı bilgisi şablonu
+├── postman/
+│   ├── ERP_API.postman_collection.json    # Ana koleksiyon (endpoint'ler, örnek response'larla)
+│   └── environments/
+│       └── Test.postman_environment.json  # baseURL / kullanıcı bilgisi şablonu
+└── samples/
+    └── dotnet-client/                     # Çalışan .NET 8 örnek istemci (4 endpoint)
+        ├── README.md                      # Kurulum ve çalıştırma talimatları
+        └── KursoftApiClient/
 ```
+
+## Örnek İstemci (.NET)
+
+`samples/dotnet-client/` altında, dokümanlardaki dört endpoint'i çağıran çalışan bir .NET 8 konsol uygulaması bulunur. Kendi bilgisayarınızda `dotnet run` ile çalıştırıp API'yi canlı olarak test edebilirsiniz. Kurulum adımları için `samples/dotnet-client/README.md` dosyasına bakınız.
+
+> ⚠️ Bu örnekte de aynı kural geçerlidir: `BaseUrl` / `Username` / `Password` bilgilerinizi asla repo'daki dosyalara yazıp commit etmeyin — `appsettings.Local.json` (git tarafından yoksayılır) ya da ortam değişkenlerini kullanın.
 
 ## Genel Kurallar
 
@@ -89,6 +99,7 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | 2026-08-28 | CreateOrder koleksiyonuna iki edge-case senaryosu eklendi: mükerrer sipariş (aynı OrderNumber) ve InvoiceAddress null hatası. |
 | 2026-08-28 | Sipariş Listesi (OrderList) endpoint'i eklendi. ShippingAddress / BillingAddress / Items alt model detayları henüz eksik, ayrıca güncellenecek. |
 | 2026-08-28 | OrderList sorgusundaki SQL injection açığı parametreli sorguya çevrildi; ShippingAddress / BillingAddress / Items alt model alanları tam olarak eklendi. |
+| 2026-08-28 | 4 endpoint'i çağıran çalışan bir .NET 8 örnek istemci eklendi (`samples/dotnet-client/`). |
 
 ## Destek
 
