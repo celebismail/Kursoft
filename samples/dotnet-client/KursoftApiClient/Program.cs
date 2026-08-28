@@ -1,223 +1,168 @@
 using KursoftApiClient.Configuration;
 using KursoftApiClient.Http;
 using KursoftApiClient.Models;
+using Microsoft.OpenApi.Models;
 
 // ============================================================================
-// KURSOFT ERP API — Örnek İstemci (.NET 8 Console App)
+// KURSOFT ERP API — Örnek İstemci (Swagger UI ile interaktif test aracı)
 //
-// Bu proje, repo'daki docs/ klasöründe belgelenen dört endpoint'i nasıl
-// çağıracağınızı gösteren çalışan bir referanstır:
-//   1) Sipariş Oluştur   (CreateOrder)
-//   2) Sipariş Listesi   (OrderList)
-//   3) Ödeme Oluştur     (PaymentCreate)
-//   4) Müşteri Listesi   (Customerlist)
+// Bu proje, repo'daki docs/ klasöründe belgelenen sekiz endpoint'i
+// tarayıcıdan tıklayarak (Postman gerekmeden) deneyebileceğiniz, Swagger UI
+// ile açılan bir ASP.NET Core Web API'dir. Her /demo/* rotası, gerçek
+// KURSOFT API'sine bir istek atıp yanıtı olduğu gibi size geri döner —
+// yani burası "sahte" bir API değil, gerçek API'ye giden bir vitrin/köprüdür.
 //
 // Çalıştırmadan önce: samples/dotnet-client/README.md dosyasındaki
 // "Kurulum" adımlarını izleyerek BaseUrl / Username / Password
 // bilgilerinizi appsettings.Local.json içine ya da ortam değişkenlerine
 // tanımlayın. Bu bilgiler kesinlikle appsettings.json içine YAZILMAMALI
 // (o dosya repo'ya commit edilir).
+//
+// Çalıştırın: dotnet run   →  tarayıcı otomatik http://localhost:5080/swagger adresini açar.
 // ============================================================================
 
-Console.OutputEncoding = System.Text.Encoding.UTF8;
+var builder = WebApplication.CreateBuilder(args);
 
-Console.WriteLine("=== KURSOFT ERP API — Örnek İstemci ===\n");
+var settings = ApiSettings.Load(AppContext.BaseDirectory);
+builder.Services.AddSingleton(settings);
+builder.Services.AddSingleton<KursoftApiService>();
 
-ApiSettings settings;
-try
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
 {
-    settings = ApiSettings.Load(AppContext.BaseDirectory);
-}
-catch (InvalidOperationException ex)
-{
-    Console.Error.WriteLine($"Ayarlar okunamadı: {ex.Message}");
-    return 1;
-}
-
-Console.WriteLine($"BaseUrl : {settings.BaseUrl}");
-Console.WriteLine($"Username: {settings.Username}");
-Console.WriteLine("Password: ****\n");
-
-using var api = new KursoftApiService(settings);
-
-// Her adım birbirinden bağımsızdır; istediğinizi yorum satırına alıp
-// sadece ilgilendiğiniz endpoint'i test edebilirsiniz.
-await RunCreateOrderDemoAsync(api);
-await RunOrderListDemoAsync(api);
-await RunPaymentCreateDemoAsync(api);
-await RunCustomerListDemoAsync(api);
-
-Console.WriteLine("\n=== Tamamlandı ===");
-return 0;
-
-
-// ----------------------------------------------------------------------
-// 1) Sipariş Oluştur
-// ----------------------------------------------------------------------
-static async Task RunCreateOrderDemoAsync(KursoftApiService api)
-{
-    PrintStep("1) Sipariş Oluştur (CreateOrder) — Bireysel Müşteri");
-
-    // Aynı OrderNumber ile tekrar denerseniz API isteği sessizce
-    // yok sayar (status:false döner) — bu yüzden her çalıştırmada
-    // benzersiz bir numara üretiyoruz.
-    var orderNumber = $"ORNEK-{DateTime.UtcNow:yyyyMMddHHmmss}";
-
-    var request = new CreateOrderRequest
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        OrderDate = DateTime.UtcNow,
-        GrandTotal = 1416.00m,
-        SendInvoice = false,
-        Products =
-        [
-            new OrderProductLine
-            {
-                ProductCode = "STK-0001",
-                ProductName = "Test Urunu A",
-                Barcode = "8690000000001",
-                GrossPrice = 600.00m,
-                Quantity = 2,
-                WarehouseId = 1,
-                Unit = "ADET",
-                VATRate = 18,
-                TotalVAT = 216.00m,
-                LineNote = "Örnek istemciden gönderildi",
-            },
-        ],
-        InvoiceAddress = new InvoiceAddress
+        Title = "KURSOFT ERP — Örnek İstemci",
+        Version = "v1",
+        Description =
+            "docs/ klasöründeki API dokümanlarına karşılık gelen, gerçek KURSOFT API'sine " +
+            "istek atan interaktif bir test arayüzü. Her rota altındaki 'Try it out' " +
+            "butonuyla gerçek bir çağrı yapabilirsiniz.\n\n" +
+            (settings.IsConfigured
+                ? $"Bağlı ortam: {settings.BaseUrl}"
+                : "⚠️ BaseUrl/Username/Password henüz ayarlanmamış — istekler 'yapılandırma eksik' hatası döner. " +
+                  "Kurulum için samples/dotnet-client/README.md dosyasına bakın."),
+    });
+});
+
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "KURSOFT ERP — Örnek İstemci v1");
+    options.DocumentTitle = "KURSOFT ERP — Örnek İstemci";
+});
+
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
+// ----------------------------------------------------------------------
+// Ortak hata işleyici: her demo endpoint'i bu sarmalayıcı içinden geçer.
+// KursoftApiException'ı gerçek API'nin döndürdüğü durum koduyla, yapılandırma
+// eksikse 400 ile açıklayıcı bir mesajla, beklenmeyen hatalarda 500 ile döner.
+// ----------------------------------------------------------------------
+async Task<IResult> InvokeAsync(ApiSettings apiSettings, Func<Task<IResult>> action)
+{
+    if (!apiSettings.IsConfigured)
+    {
+        return Results.BadRequest(new
         {
-            FirstName = "Ahmet",
-            LastName = "Yilmaz",
-            NationalId = "12345678901",
-            Email = "ahmet@test.com",
-            Phone = "05551234567",
-            FullAddress = "Levent Mah. Buyukdere Cad. No:1 Kat:5",
-            District = "Besiktas",
-            City = "Istanbul",
-        },
-        OrderInfo = new OrderInfo
-        {
-            OrderNumber = orderNumber,
-            InvoiceEmail = "ahmet@test.com",
-            DeliveryAddress = new DeliveryAddress
-            {
-                FullName = "Ahmet Yilmaz",
-                Email = "ahmet@test.com",
-                Phone = "05551234567",
-                FullAddress = "Levent Mah. Buyukdere Cad. No:1 Kat:5",
-                District = "Besiktas",
-                City = "Istanbul",
-                PostalCode = "34330",
-            },
-        },
-    };
+            error = "Yapılandırma eksik.",
+            detail = "BaseUrl / Username / Password ayarlanmamış. samples/dotnet-client/README.md " +
+                     "dosyasındaki kurulum adımlarını izleyip appsettings.Local.json oluşturun ya da " +
+                     "KURSOFT_BASEURL / KURSOFT_USERNAME / KURSOFT_PASSWORD ortam değişkenlerini tanımlayın.",
+        });
+    }
 
     try
     {
-        var result = await api.CreateOrderAsync(request);
-        if (result is { Status: true })
-            Console.WriteLine($"  ✅ Sipariş oluşturuldu. OrderID={result.OrderID}, OrderNumber={orderNumber}");
-        else
-            Console.WriteLine($"  ⚠️  Sipariş oluşturulamadı: {result?.Ressonmessage}");
+        return await action();
     }
     catch (KursoftApiException ex)
     {
-        Console.WriteLine($"  ❌ Hata: {ex.Message}");
+        return Results.Json(new { error = ex.Message, rawBody = ex.RawBody }, statusCode: (int)ex.StatusCode);
     }
 }
 
+// ----------------------------------------------------------------------
+// 1) Sipariş Oluştur — docs/CreateOrder_API_Dokumani.docx
+// ----------------------------------------------------------------------
+app.MapPost("/demo/create-order", async (CreateOrderRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.CreateOrderAsync(request))))
+    .WithTags("1. Sipariş")
+    .WithSummary("Sipariş Oluştur (CreateOrder)")
+    .WithDescription("POST /api/v2/Order/CreateOrder — docs/CreateOrder_API_Dokumani.docx")
+    .Produces<CreateOrderResponse>(200)
+    .Accepts<CreateOrderRequest>("application/json");
 
 // ----------------------------------------------------------------------
-// 2) Sipariş Listesi
+// 2) Sipariş Listesi — docs/OrderList_API_Dokumani.docx
 // ----------------------------------------------------------------------
-static async Task RunOrderListDemoAsync(KursoftApiService api)
-{
-    PrintStep("2) Sipariş Listesi (OrderList) — Filtresiz, son 100 kayıt");
-
-    try
-    {
-        var result = await api.GetOrderListAsync(orderNumber: null);
-        Console.WriteLine($"  ✅ {result?.OrderCount ?? 0} sipariş bulundu.");
-
-        foreach (var order in (result?.Orders ?? []).Take(5))
-        {
-            Console.WriteLine($"     - #{order.Id} {order.OrderNumber} | {order.Customer} | {order.TotalAmount:0.00} | {order.PackageStatus}");
-        }
-    }
-    catch (KursoftApiException ex)
-    {
-        Console.WriteLine($"  ❌ Hata: {ex.Message}");
-    }
-}
-
+app.MapPost("/demo/order-list", async (string? orderNumber, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.GetOrderListAsync(orderNumber))))
+    .WithTags("1. Sipariş")
+    .WithSummary("Sipariş Listesi (OrderList)")
+    .WithDescription("POST /api/v2/Order/OrderList — docs/OrderList_API_Dokumani.docx. orderNumber boş bırakılırsa son 100 sipariş döner.")
+    .Produces<OrderListResponse>(200);
 
 // ----------------------------------------------------------------------
-// 3) Ödeme Oluştur
+// 3) Ödeme Oluştur — docs/PaymentCreate_API_Dokumani.docx
 // ----------------------------------------------------------------------
-static async Task RunPaymentCreateDemoAsync(KursoftApiService api)
-{
-    PrintStep("3) Ödeme Oluştur (PaymentCreate) — Nakit Tahsilat");
-
-    var paymentNumber = $"ORNEK-ODEME-{DateTime.UtcNow:yyyyMMddHHmmss}";
-
-    var request = new PaymentCreateRequest
-    {
-        TransactionType = (int)TransactionType.NakitTahsilat, // 1
-        CashAccountId = 3,
-        Amount = 1500.00m,
-        Description = "Örnek istemciden gönderildi",
-        CustomerId = 482, // Kendi ortamınızda geçerli bir CustomerId ile değiştirin
-        Currency = "TRY",
-        Date = DateTime.UtcNow,
-        PaymentNumber = paymentNumber,
-    };
-
-    try
-    {
-        var result = await api.CreatePaymentAsync(request);
-        Console.WriteLine($"  ✅ {result?.Mesaj} (islemID={result?.IslemID})");
-    }
-    catch (KursoftApiException ex)
-    {
-        Console.WriteLine($"  ❌ Hata: {ex.Message}");
-    }
-}
-
+app.MapPost("/demo/payment-create", async (PaymentCreateRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.CreatePaymentAsync(request))))
+    .WithTags("2. Ödeme")
+    .WithSummary("Ödeme / Nakit Hareket Oluştur (PaymentCreate)")
+    .WithDescription("POST /api/v2/Payment/PaymentCreate — docs/PaymentCreate_API_Dokumani.docx. TransactionType değerleri için dokümandaki enum referansına bakınız.")
+    .Produces<PaymentCreateResponse>(200);
 
 // ----------------------------------------------------------------------
-// 4) Müşteri Listesi
+// 4) Müşteri Listesi — docs/Customerlist_API_Dokumani.docx
 // ----------------------------------------------------------------------
-static async Task RunCustomerListDemoAsync(KursoftApiService api)
-{
-    PrintStep("4) Müşteri Listesi (Customerlist) — İstanbul, aktif cariler");
+app.MapPost("/demo/customer-list", async (CustomerListRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.GetCustomerListAsync(request))))
+    .WithTags("3. Müşteri")
+    .WithSummary("Müşteri Listesi (Customerlist)")
+    .WithDescription("POST /api/v2/Customer/Customerlist — docs/Customerlist_API_Dokumani.docx")
+    .Produces<List<CustomerListItem>>(200);
 
-    var request = new CustomerListRequest
-    {
-        City = "Istanbul",
-        IsActive = true,
-        OrderBy = "CustomerName",
-        OrderDirection = "ASC",
-        Top = 10,
-    };
+// ----------------------------------------------------------------------
+// 5) Cari İşlem Takibi — docs/TransactionHistory_API_Dokumani.docx
+// ----------------------------------------------------------------------
+app.MapPost("/demo/transaction-history", async (TransactionHistoryRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.GetTransactionHistoryAsync(request))))
+    .WithTags("3. Müşteri")
+    .WithSummary("Cari İşlem Takibi (TransactionHistory)")
+    .WithDescription("POST /api/v2/Customer/TransactionHistory — docs/TransactionHistory_API_Dokumani.docx. Filter değerleri için dokümandaki CariTransactionFilter enum referansına bakınız.")
+    .Produces<TransactionHistoryResponse>(200);
 
-    try
-    {
-        var result = await api.GetCustomerListAsync(request);
-        Console.WriteLine($"  ✅ {result?.Count ?? 0} müşteri bulundu.");
+// ----------------------------------------------------------------------
+// 6) Ürün Ekle — docs/Product_API_Dokumani.docx (bölüm 2)
+// ----------------------------------------------------------------------
+app.MapPost("/demo/product-create", async (CreateProductRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.CreateProductAsync(request))))
+    .WithTags("4. Ürün")
+    .WithSummary("Ürün Ekle (CreateProduct)")
+    .WithDescription("POST /api/v2/Product/CreateProduct — docs/Product_API_Dokumani.docx (bölüm 2)")
+    .Produces<CreateProductResponse>(200);
 
-        foreach (var customer in result ?? [])
-        {
-            Console.WriteLine($"     - {customer.CustomerCode} | {customer.CustomerName} | Bakiye: {customer.Balance:0.00} {customer.Currency}");
-        }
-    }
-    catch (KursoftApiException ex)
-    {
-        Console.WriteLine($"  ❌ Hata: {ex.Message}");
-    }
-}
+// ----------------------------------------------------------------------
+// 7) Stok Güncelle — docs/Product_API_Dokumani.docx (bölüm 3)
+// ----------------------------------------------------------------------
+app.MapPost("/demo/stock-update", async (StockUpdateRequest[] request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.UpdateStockAsync(request))))
+    .WithTags("4. Ürün")
+    .WithSummary("Stok Güncelle (StockUpdate)")
+    .WithDescription("POST /api/v2/Product/StockUpdate — docs/Product_API_Dokumani.docx (bölüm 3). En fazla 100 kayıt; hata yönetimi satır bazlıdır.")
+    .Produces<List<StockUpdateResponse>>(200);
 
+// ----------------------------------------------------------------------
+// 8) Stok Fiyat Güncelle — docs/Product_API_Dokumani.docx (bölüm 4)
+// ----------------------------------------------------------------------
+app.MapPost("/demo/stock-price-update", async (StockPriceUpdateRequest[] request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.UpdateStockPriceAsync(request))))
+    .WithTags("4. Ürün")
+    .WithSummary("Stok Fiyat Güncelle (StockPriceUpdate)")
+    .WithDescription("POST /api/v2/Product/StockPriceUpdate — docs/Product_API_Dokumani.docx (bölüm 4). ⚠️ Şu an yalnızca varyantsız ürünlerde çalışır.")
+    .Produces<List<StockUpdateResponse>>(200);
 
-static void PrintStep(string title)
-{
-    Console.WriteLine($"\n--- {title} ---");
-}
+app.Run();

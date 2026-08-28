@@ -48,6 +48,10 @@ sağlar. Amaç, entegrasyon sürecini dokümanı satır satır okuyup deneme-yan
 | 1. Sipariş | `POST /api/v2/Order/OrderList` | Sipariş listesini opsiyonel sipariş/fatura numarası filtresiyle döndürür. |
 | 2. Ödeme | `POST /api/v2/Payment/PaymentCreate` | Nakit tahsilat, ödeme, havale/EFT gibi nakit hareket kayıtları oluşturur. |
 | 3. Müşteri | `POST /api/v2/Customer/Customerlist` | Filtrelenmiş ve sıralanmış müşteri (cari) listesini döndürür. |
+| 3. Müşteri | `POST /api/v2/Customer/TransactionHistory` | Bir carinin işlem dökümünü ve kümülatif bakiyesini döndürür. |
+| 4. Ürün | `POST /api/v2/Product/CreateProduct` | Yeni ürün/stok kartı oluşturur. |
+| 4. Ürün | `POST /api/v2/Product/StockUpdate` | Barkoda göre stok mevcudunu toplu günceller (en fazla 100 kayıt). |
+| 4. Ürün | `POST /api/v2/Product/StockPriceUpdate` | Barkoda göre fiyat kademelerini toplu günceller (en fazla 100 kayıt). |
 
 Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs/` klasöründeki ilgili Word dokümanına bakınız.
 
@@ -59,6 +63,8 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | `docs/OrderList_API_Dokumani.docx` | Sipariş listesi — sorgu parametresi, yanıt alanları, hata referansı |
 | `docs/PaymentCreate_API_Dokumani.docx` | Ödeme/nakit hareket oluşturma — işlem türü (enum) referansı dahil |
 | `docs/Customerlist_API_Dokumani.docx` | Müşteri listesi — filtre ve sıralama alanları, OrderBy beyaz listesi |
+| `docs/TransactionHistory_API_Dokumani.docx` | Cari işlem takibi — filtre enum'u, devreden bakiye mantığı, kümülatif bakiye hesaplama |
+| `docs/Product_API_Dokumani.docx` | Ürün ekleme, stok güncelleme ve fiyat güncelleme (3 endpoint tek dokümanda) |
 
 ## Repo Yapısı
 
@@ -79,11 +85,13 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
         └── KursoftApiClient/
 ```
 
-## Örnek İstemci (.NET)
+## Örnek İstemci (.NET — Swagger UI)
 
-`samples/dotnet-client/` altında, dokümanlardaki dört endpoint'i çağıran çalışan bir .NET 8 konsol uygulaması bulunur. Kendi bilgisayarınızda `dotnet run` ile çalıştırıp API'yi canlı olarak test edebilirsiniz. Kurulum adımları için `samples/dotnet-client/README.md` dosyasına bakınız.
+`samples/dotnet-client/` altında, dokümanlardaki sekiz endpoint'i çağıran çalışan bir ASP.NET Core 8 Web API bulunur. `dotnet run` ile başlattığınızda tarayıcıda Swagger UI açılır; her endpoint'i "Try it out" ile tıklayarak canlı test edebilirsiniz — Postman veya konsol çıktısı okumaya gerek kalmadan. Kurulum adımları için `samples/dotnet-client/README.md` dosyasına bakınız.
 
 > ⚠️ Bu örnekte de aynı kural geçerlidir: `BaseUrl` / `Username` / `Password` bilgilerinizi asla repo'daki dosyalara yazıp commit etmeyin — `appsettings.Local.json` (git tarafından yoksayılır) ya da ortam değişkenlerini kullanın.
+
+> ⚠️ Projeyi kendi bilgisayarınızda derleyip çalıştırdıktan sonra `git status` ile `bin/` ve `obj/` klasörlerinin izlenmediğinden emin olun. Yanlışlıkla commit ettiyseniz: `git rm -r --cached samples/dotnet-client/KursoftApiClient/bin samples/dotnet-client/KursoftApiClient/obj` ile git takibinden çıkarıp tekrar commit edin (`.gitignore` bu klasörleri zaten kapsıyor, sadece daha önce eklenmiş dosyaları geri almaz).
 
 ## Genel Kurallar
 
@@ -100,6 +108,7 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | 2026-08-28 | Sipariş Listesi (OrderList) endpoint'i eklendi. ShippingAddress / BillingAddress / Items alt model detayları henüz eksik, ayrıca güncellenecek. |
 | 2026-08-28 | OrderList sorgusundaki SQL injection açığı parametreli sorguya çevrildi; ShippingAddress / BillingAddress / Items alt model alanları tam olarak eklendi. |
 | 2026-08-28 | 4 endpoint'i çağıran çalışan bir .NET 8 örnek istemci eklendi (`samples/dotnet-client/`). |
+| 2026-08-28 | Cari İşlem Takibi (TransactionHistory) ve Ürün/Stok API'leri (CreateProduct, StockUpdate, StockPriceUpdate) eklendi. Örnek istemci konsol yerine Swagger UI ile açılan interaktif bir ASP.NET Core Web API'ye dönüştürüldü (8 endpoint). |
 
 ## Destek
 

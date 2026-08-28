@@ -19,6 +19,16 @@ public sealed class ApiSettings
     public required string Username { get; init; }
     public required string Password { get; init; }
 
+    /// <summary>
+    /// true dönerse BaseUrl/Username/Password eksiktir; UI bunu kullanıcıya
+    /// bir uyarı olarak gösterir (fırlatmak yerine, çünkü Swagger UI'ın en
+    /// azından açılabilmesi gerekir).
+    /// </summary>
+    public bool IsConfigured =>
+        !string.IsNullOrWhiteSpace(BaseUrl) &&
+        !string.IsNullOrWhiteSpace(Username) &&
+        !string.IsNullOrWhiteSpace(Password);
+
     public static ApiSettings Load(string basePath)
     {
         var values = new Dictionary<string, string?>
@@ -39,20 +49,11 @@ public sealed class ApiSettings
         values["Username"] = Environment.GetEnvironmentVariable("KURSOFT_USERNAME") ?? values["Username"];
         values["Password"] = Environment.GetEnvironmentVariable("KURSOFT_PASSWORD") ?? values["Password"];
 
-        var missing = values.Where(kv => string.IsNullOrWhiteSpace(kv.Value)).Select(kv => kv.Key).ToList();
-        if (missing.Count > 0)
-        {
-            throw new InvalidOperationException(
-                $"Eksik ayarlar: {string.Join(", ", missing)}. " +
-                "Bunları appsettings.Local.json içinde ya da KURSOFT_BASEURL / KURSOFT_USERNAME / " +
-                "KURSOFT_PASSWORD ortam değişkenleri olarak tanımlayın. Detaylar için README.md dosyasına bakın.");
-        }
-
         return new ApiSettings
         {
-            BaseUrl = values["BaseUrl"]!,
-            Username = values["Username"]!,
-            Password = values["Password"]!,
+            BaseUrl = values["BaseUrl"] ?? "",
+            Username = values["Username"] ?? "",
+            Password = values["Password"] ?? "",
         };
     }
 

@@ -1,8 +1,8 @@
 {
   "info": {
-    "_postman_id": "58505a7f-56f6-4065-9b1a-505c2b73cdec",
+    "_postman_id": "3b1864f7-e715-49dc-96a8-e5ec707c2673",
     "name": "KURSOFT ERP Entegrasyon API'leri",
-    "description": "KURSOFT ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma (Order/CreateOrder)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi (Customer/Customerlist)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: destek@kursoft.com.tr · kursoft.com.tr",
+    "description": "KURSOFT ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma / Listeleme (Order/CreateOrder, Order/OrderList)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi ve Cari İşlem Takibi (Customer/Customerlist, Customer/TransactionHistory)\n- Ürün ve Stok Yönetimi (Product/CreateProduct, Product/StockUpdate, Product/StockPriceUpdate)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: destek@kursoft.com.tr · kursoft.com.tr",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {
@@ -44,7 +44,7 @@
       "item": [
         {
           "name": "Sipariş Oluştur — Bireysel Müşteri",
-          "id": "c2bee3d5-ca67-41d7-9b83-f0b6a2880ffd",
+          "id": "aa166553-a600-491a-97e0-ad1057c94407",
           "request": {
             "method": "POST",
             "header": [
@@ -178,7 +178,7 @@
         },
         {
           "name": "Sipariş Oluştur — Kurumsal Müşteri",
-          "id": "b5edb34c-11cc-4a89-948d-9f7fa556c00f",
+          "id": "529abbb4-1c1b-4bc4-8cb1-f5b6f3528d00",
           "request": {
             "method": "POST",
             "header": [
@@ -269,7 +269,7 @@
         },
         {
           "name": "⚠️ Mükerrer Sipariş (Aynı OrderNumber)",
-          "id": "27e8e888-98c5-495d-acc6-bc27aeb235f3",
+          "id": "87f82447-6979-49c6-a258-3c62a0191986",
           "request": {
             "method": "POST",
             "header": [
@@ -360,7 +360,7 @@
         },
         {
           "name": "❌ Hata — InvoiceAddress null",
-          "id": "8efa9038-5c45-40a3-b064-9dc72708351f",
+          "id": "2901631b-9e2e-43cf-877f-ef95dd2cb09f",
           "request": {
             "method": "POST",
             "header": [
@@ -451,7 +451,7 @@
         },
         {
           "name": "Sipariş Listesi — Sipariş Numarasına Göre",
-          "id": "8306413c-ba00-4e91-b91c-07dea6e8c89c",
+          "id": "5e63033c-3efc-4f00-897b-91d0fccbfc61",
           "request": {
             "method": "POST",
             "header": [
@@ -582,7 +582,7 @@
         },
         {
           "name": "Sipariş Listesi — Filtresiz (Son 100 Sipariş)",
-          "id": "4f652760-622d-495b-92f0-1e8636e906ab",
+          "id": "fa15266c-2869-4eb0-bbb3-8c51d8720a79",
           "request": {
             "method": "POST",
             "header": [
@@ -712,7 +712,7 @@
       "item": [
         {
           "name": "Ödeme Oluştur — Nakit Tahsilat",
-          "id": "68f2228a-8ed0-4f6e-9d95-e39a597deaad",
+          "id": "d5b88623-ff50-4340-891e-a8aa89b15ec7",
           "request": {
             "method": "POST",
             "header": [
@@ -846,7 +846,7 @@
         },
         {
           "name": "Ödeme Oluştur — Gelen Havale / EFT",
-          "id": "cbd47a7a-f6e5-49da-a118-a3cd567da5c1",
+          "id": "9d60c781-7a33-4ed4-91a7-eff9ec10c08c",
           "request": {
             "method": "POST",
             "header": [
@@ -985,7 +985,7 @@
       "item": [
         {
           "name": "Müşteri Listesi — Filtresiz (Varsayılan)",
-          "id": "a4eed0be-b133-4036-bf70-7b201da3a48e",
+          "id": "0fc5fcd0-14a4-4f8b-a763-a8f81c0b7597",
           "request": {
             "method": "POST",
             "header": [
@@ -1076,7 +1076,7 @@
         },
         {
           "name": "Müşteri Listesi — Filtreli ve Sıralı",
-          "id": "cbb1a2a3-071a-4619-bf22-66f477cdad22",
+          "id": "eded15ec-ef55-495a-8b2e-d4f80d9b42a6",
           "request": {
             "method": "POST",
             "header": [
@@ -1162,6 +1162,595 @@
                 }
               ],
               "body": "[\n  {\n    \"id\": 482,\n    \"customerCode\": \"CRI-0482\",\n    \"customerName\": \"Test Ticaret A.S.\",\n    \"authorizedPerson\": \"Mehmet Yilmaz\",\n    \"taxOffice\": \"Besiktas\",\n    \"taxNumber\": \"1234567890\",\n    \"phone\": \"02121234567\",\n    \"phone2\": \"\",\n    \"address\": \"Maslak Mah. Eski Buyukdere Cad. No:26\",\n    \"country\": \"Turkiye\",\n    \"city\": \"Istanbul\",\n    \"email\": \"info@testticaret.com\",\n    \"createdDate\": \"2021-03-14T00:00:00\",\n    \"balance\": 15420.5,\n    \"balanceType\": \"A\",\n    \"currency\": \"TRY\",\n    \"isActive\": true,\n    \"customerGroup\": \"Bayi\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Cari İşlem Takibi — Tüm İşlemler",
+          "id": "e3ce84b8-ba32-43cb-b117-3cc8acd23a95",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"CustomerId\": 482,\n  \"Year\": 2026,\n  \"Currency\": \"TRY\",\n  \"Filter\": 0,\n  \"Search\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Customer/TransactionHistory",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Customer",
+                "TransactionHistory"
+              ]
+            },
+            "description": "Filter=0 (All) ile bir cariye ait tüm işlem dökümünü, devreden bakiye satırıyla birlikte döner."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"recordCount\": 2,\n  \"transactions\": [\n    {\n      \"id\": -1,\n      \"transactionType\": \"Devreden Bakiye\",\n      \"transactionNumber\": \"\",\n      \"transactionDate\": \"2026-01-01T00:00:00\",\n      \"amount\": 5000,\n      \"currency\": \"TRY\",\n      \"description\": \"Rapor Öncesi Bakiye\",\n      \"dueDate\": \"2026-01-01T00:00:00\",\n      \"debitCreditFlag\": \"(A)\",\n      \"sourceTable\": \"Devir\",\n      \"runningBalance\": 5000\n    },\n    {\n      \"id\": 88213,\n      \"transactionType\": \"Satış Faturası\",\n      \"transactionNumber\": \"FTR-2026-00120\",\n      \"transactionDate\": \"2026-03-11T00:00:00\",\n      \"amount\": 1416,\n      \"currency\": \"TRY\",\n      \"description\": \"\",\n      \"dueDate\": \"2026-04-10T00:00:00\",\n      \"debitCreditFlag\": \"(A)\",\n      \"sourceTable\": \"Fatura\",\n      \"runningBalance\": 6416\n    }\n  ]\n}"
+            },
+            {
+              "name": "400 Bad Request — Geçersiz CustomerId",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "CustomerId zorunludur ve 0'dan büyük olmalıdır."
+            }
+          ]
+        },
+        {
+          "name": "Cari İşlem Takibi — Vadesi Geçmiş Borçlar",
+          "id": "7a229759-0f88-4b32-a840-b301bf3cb817",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"CustomerId\": 482,\n  \"Year\": 2026,\n  \"Currency\": \"TRY\",\n  \"Filter\": 2,\n  \"Search\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Customer/TransactionHistory",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Customer",
+                "TransactionHistory"
+              ]
+            },
+            "description": "Filter=2 (OverduePayables) ile yalnızca vadesi geçmiş, kapanmamış borçları listeler."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"recordCount\": 1,\n  \"transactions\": [\n    {\n      \"id\": 91045,\n      \"transactionType\": \"Alış Faturası\",\n      \"transactionNumber\": \"AFTR-2026-00087\",\n      \"transactionDate\": \"2026-05-02T00:00:00\",\n      \"amount\": 3200,\n      \"currency\": \"TRY\",\n      \"description\": \"\",\n      \"dueDate\": \"2026-06-01T00:00:00\",\n      \"debitCreditFlag\": \"(B)\",\n      \"sourceTable\": \"Fatura\",\n      \"runningBalance\": 3200\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Ürün",
+      "item": [
+        {
+          "name": "Ürün Ekle",
+          "id": "2c572416-c94b-4d7e-9bdb-b8261e59cfcf",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"AdminId\": 1,\n  \"ProductName\": \"Test Urunu C\",\n  \"Sku\": \"STK-0003\",\n  \"Barcode1\": \"8690000000003\",\n  \"Category\": \"Elektronik\",\n  \"Unit\": \"ADET\",\n  \"Quantity\": 100,\n  \"MinStock\": 10,\n  \"Price\": 750,\n  \"Currency\": \"TRY\",\n  \"Kdv\": 20,\n  \"Supplier\": \"Örnek Tedarikçi\",\n  \"Warehouse\": \"Merkez Depo\",\n  \"Status\": \"active\",\n  \"Description\": \"Örnek istemciden gönderildi\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Product/CreateProduct",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Product",
+                "CreateProduct"
+              ]
+            },
+            "description": "Yeni ürün/stok kartı oluşturur. AlisFiyat, FiyatKilidi, Kategori1-5 gibi alanlar sunucu tarafında sabit atanır."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"id\": 5821,\n  \"message\": \"Ürün başarıyla oluşturuldu.\"\n}"
+            },
+            {
+              "name": "400 Bad Request — Doğrulama Hatası",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ProductName\": [\n    \"Ürün adı zorunludur.\"\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Stok Güncelle",
+          "id": "1492f495-8b4a-47de-89e7-6bd64f3e36f2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"Barcode\": \"8690000000001\",\n    \"StockQuantity\": 45\n  },\n  {\n    \"Barcode\": \"8690000000002\",\n    \"StockQuantity\": 12\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Product/StockUpdate",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Product",
+                "StockUpdate"
+              ]
+            },
+            "description": "Barkoda göre ürünlerin stok mevcudunu toplu olarak hedef değere ayarlar (en fazla 100 kayıt). Hata yönetimi satır bazlıdır, HTTP her zaman 200 döner (dizi tamamen geçersiz olmadıkça)."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"status\": true,\n    \"statusMessage\": \"İşlem başarılı, stok mevcudu güncellendi.\",\n    \"barcode\": \"8690000000001\",\n    \"stockQuantity\": 45,\n    \"stockPrice\": null\n  },\n  {\n    \"status\": false,\n    \"statusMessage\": \"Ürün bulunamadı.\",\n    \"barcode\": \"8690000000002\",\n    \"stockQuantity\": 12,\n    \"stockPrice\": null\n  }\n]"
+            },
+            {
+              "name": "400 Bad Request — Limit Aşımı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "Limit Aşımı! Tek seferde en fazla 100 ürün gönderilebilir."
+            }
+          ]
+        },
+        {
+          "name": "Stok Fiyat Güncelle",
+          "id": "87da51ac-abcd-40b2-984b-1d3780e93880",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"Barcode\": \"8690000000001\",\n    \"Price1\": 650,\n    \"Price2\": 600\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Product/StockPriceUpdate",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Product",
+                "StockPriceUpdate"
+              ]
+            },
+            "description": "Barkoda göre fiyat kademelerini (Price1-Price10) günceller. Kısmi güncelleme desteklenir; 0/boş gönderilen alanlar değişmez. Yalnızca varyantsız ürünlerde çalışır (bkz. doküman uyarısı)."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"status\": true,\n    \"statusMessage\": \"İşlem Başarılı, Ürün fiyatı başarıyla güncellendi.\",\n    \"barcode\": \"8690000000001\",\n    \"stockQuantity\": 0,\n    \"stockPrice\": {\n      \"price1\": 650,\n      \"price2\": 600,\n      \"price3\": 0,\n      \"price4\": 0,\n      \"price5\": 0,\n      \"price6\": 0,\n      \"price7\": 0,\n      \"price8\": 0,\n      \"price9\": 0,\n      \"price10\": 0\n    }\n  }\n]"
             }
           ]
         }

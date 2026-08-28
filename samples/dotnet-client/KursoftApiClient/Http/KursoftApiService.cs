@@ -11,10 +11,14 @@ namespace KursoftApiClient.Http;
 ///
 /// Her metod, docs/ klasöründeki ilgili Word dokümanında tarif edilen
 /// endpoint'e karşılık gelir:
-///   - CreateOrderAsync   → docs/CreateOrder_API_Dokumani.docx
-///   - GetOrderListAsync  → docs/OrderList_API_Dokumani.docx
-///   - CreatePaymentAsync → docs/PaymentCreate_API_Dokumani.docx
-///   - GetCustomerListAsync → docs/Customerlist_API_Dokumani.docx
+///   - CreateOrderAsync         → docs/CreateOrder_API_Dokumani.docx
+///   - GetOrderListAsync        → docs/OrderList_API_Dokumani.docx
+///   - CreatePaymentAsync       → docs/PaymentCreate_API_Dokumani.docx
+///   - GetCustomerListAsync     → docs/Customerlist_API_Dokumani.docx
+///   - GetTransactionHistoryAsync → docs/TransactionHistory_API_Dokumani.docx
+///   - CreateProductAsync       → docs/Product_API_Dokumani.docx (bölüm 2)
+///   - UpdateStockAsync         → docs/Product_API_Dokumani.docx (bölüm 3)
+///   - UpdateStockPriceAsync    → docs/Product_API_Dokumani.docx (bölüm 4)
 ///
 /// Tüm dokümanlarda belirtildiği gibi her istekte Username/Password
 /// header'ları zorunludur; bu sınıf bunu HttpClient.DefaultRequestHeaders
@@ -34,7 +38,7 @@ public sealed class KursoftApiService : IDisposable
     {
         _http = new HttpClient
         {
-            BaseAddress = new Uri(settings.BaseUrl.TrimEnd('/') + "/"),
+            BaseAddress = new Uri((string.IsNullOrWhiteSpace(settings.BaseUrl) ? "http://localhost/" : settings.BaseUrl.TrimEnd('/') + "/")),
         };
 
         _http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -78,6 +82,34 @@ public sealed class KursoftApiService : IDisposable
     {
         using var response = await PostJsonAsync("api/v2/Customer/Customerlist", request, ct);
         return await ReadJsonAsync<List<CustomerListItem>>(response, ct);
+    }
+
+    /// <summary>Cari İşlem Takibi — POST /api/v2/Customer/TransactionHistory</summary>
+    public async Task<TransactionHistoryResponse?> GetTransactionHistoryAsync(TransactionHistoryRequest request, CancellationToken ct = default)
+    {
+        using var response = await PostJsonAsync("api/v2/Customer/TransactionHistory", request, ct);
+        return await ReadJsonAsync<TransactionHistoryResponse>(response, ct);
+    }
+
+    /// <summary>Ürün Ekle — POST /api/v2/Product/CreateProduct</summary>
+    public async Task<CreateProductResponse?> CreateProductAsync(CreateProductRequest request, CancellationToken ct = default)
+    {
+        using var response = await PostJsonAsync("api/v2/Product/CreateProduct", request, ct);
+        return await ReadJsonAsync<CreateProductResponse>(response, ct);
+    }
+
+    /// <summary>Stok Güncelle — POST /api/v2/Product/StockUpdate (en fazla 100 kayıt)</summary>
+    public async Task<List<StockUpdateResponse>?> UpdateStockAsync(StockUpdateRequest[] request, CancellationToken ct = default)
+    {
+        using var response = await PostJsonAsync("api/v2/Product/StockUpdate", request, ct);
+        return await ReadJsonAsync<List<StockUpdateResponse>>(response, ct);
+    }
+
+    /// <summary>Stok Fiyat Güncelle — POST /api/v2/Product/StockPriceUpdate (en fazla 100 kayıt)</summary>
+    public async Task<List<StockUpdateResponse>?> UpdateStockPriceAsync(StockPriceUpdateRequest[] request, CancellationToken ct = default)
+    {
+        using var response = await PostJsonAsync("api/v2/Product/StockPriceUpdate", request, ct);
+        return await ReadJsonAsync<List<StockUpdateResponse>>(response, ct);
     }
 
     // ---- yardımcı metodlar ----
