@@ -45,6 +45,7 @@ sağlar. Amaç, entegrasyon sürecini dokümanı satır satır okuyup deneme-yan
 | Klasör | Endpoint | Açıklama |
 |---|---|---|
 | 1. Sipariş | `POST /api/v2/Order/CreateOrder` | Yeni satış siparişi oluşturur, opsiyonel olarak e-fatura akışını tetikler. |
+| 1. Sipariş | `POST /api/v2/Order/OrderList` | Sipariş listesini opsiyonel sipariş/fatura numarası filtresiyle döndürür. |
 | 2. Ödeme | `POST /api/v2/Payment/PaymentCreate` | Nakit tahsilat, ödeme, havale/EFT gibi nakit hareket kayıtları oluşturur. |
 | 3. Müşteri | `POST /api/v2/Customer/Customerlist` | Filtrelenmiş ve sıralanmış müşteri (cari) listesini döndürür. |
 
@@ -55,6 +56,7 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | Dosya | İçerik |
 |---|---|
 | `docs/CreateOrder_API_Dokumani.docx` | Sipariş oluşturma — istek/yanıt alanları, örnek istekler, hata referansı |
+| `docs/OrderList_API_Dokumani.docx` | Sipariş listesi — sorgu parametresi, yanıt alanları, hata referansı |
 | `docs/PaymentCreate_API_Dokumani.docx` | Ödeme/nakit hareket oluşturma — işlem türü (enum) referansı dahil |
 | `docs/Customerlist_API_Dokumani.docx` | Müşteri listesi — filtre ve sıralama alanları, OrderBy beyaz listesi |
 
@@ -64,10 +66,11 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 .
 ├── docs/                                  # Word formatında API referans dokümanları
 │   ├── CreateOrder_API_Dokumani.docx
+│   ├── OrderList_API_Dokumani.docx
 │   ├── PaymentCreate_API_Dokumani.docx
 │   └── Customerlist_API_Dokumani.docx
 └── postman/
-    ├── ERP_API.postman_collection.json    # Ana koleksiyon (3 endpoint, örnek response'larla)
+    ├── ERP_API.postman_collection.json    # Ana koleksiyon (endpoint'ler, örnek response'larla)
     └── environments/
         └── Test.postman_environment.json  # baseURL / kullanıcı bilgisi şablonu
 ```
@@ -83,6 +86,9 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | Tarih | Değişiklik |
 |---|---|
 | 2026-08-28 | İlk sürüm: CreateOrder, PaymentCreate, Customerlist endpoint'leri ve Postman koleksiyonu eklendi. |
+| 2026-08-28 | CreateOrder koleksiyonuna iki edge-case senaryosu eklendi: mükerrer sipariş (aynı OrderNumber) ve InvoiceAddress null hatası. |
+| 2026-08-28 | Sipariş Listesi (OrderList) endpoint'i eklendi. ShippingAddress / BillingAddress / Items alt model detayları henüz eksik, ayrıca güncellenecek. |
+| 2026-08-28 | OrderList sorgusundaki SQL injection açığı parametreli sorguya çevrildi; ShippingAddress / BillingAddress / Items alt model alanları tam olarak eklendi. |
 
 ## Destek
 

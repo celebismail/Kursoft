@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "126d7455-44ef-43a4-8bdd-64ba1d2d085b",
+    "_postman_id": "58505a7f-56f6-4065-9b1a-505c2b73cdec",
     "name": "KURSOFT ERP Entegrasyon API'leri",
     "description": "KURSOFT ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma (Order/CreateOrder)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi (Customer/Customerlist)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: destek@kursoft.com.tr · kursoft.com.tr",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -44,7 +44,7 @@
       "item": [
         {
           "name": "Sipariş Oluştur — Bireysel Müşteri",
-          "id": "33055265-b716-48b3-b4cd-f5148ea0f59b",
+          "id": "c2bee3d5-ca67-41d7-9b83-f0b6a2880ffd",
           "request": {
             "method": "POST",
             "header": [
@@ -178,7 +178,7 @@
         },
         {
           "name": "Sipariş Oluştur — Kurumsal Müşteri",
-          "id": "2b023d89-e67b-407f-8235-eb4489e20fc5",
+          "id": "b5edb34c-11cc-4a89-948d-9f7fa556c00f",
           "request": {
             "method": "POST",
             "header": [
@@ -266,6 +266,444 @@
               "body": "{\n  \"status\": true,\n  \"InvoiceStatus\": true,\n  \"InvoiceStatusMessage\": \"Fatura gönderildi.\",\n  \"OrderID\": 98766,\n  \"ressonmessage\": \"Sipariş başarıyla oluşturuldu.\",\n  \"OrderInvoiceNumber\": \"FTR-2026-00002\",\n  \"OrderInvoiceLink\": \"https://efatura.ornek.com/FTR-2026-00002\"\n}"
             }
           ]
+        },
+        {
+          "name": "⚠️ Mükerrer Sipariş (Aynı OrderNumber)",
+          "id": "27e8e888-98c5-495d-acc6-bc27aeb235f3",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"OrderDate\": \"2026-08-28T10:00:00\",\n  \"GrandTotal\": 1416,\n  \"sendInvoice\": false,\n  \"Products\": [\n    {\n      \"ProductId\": 1,\n      \"ProductCode\": \"STK-0001\",\n      \"ProductName\": \"Test Urunu A\",\n      \"Barcode\": \"8690000000001\",\n      \"GrossPrice\": 600,\n      \"Quantity\": 2,\n      \"WarehouseId\": 1,\n      \"Unit\": \"ADET\",\n      \"VATRate\": 18,\n      \"VariantId\": 0,\n      \"SecondaryUnitQty\": 0,\n      \"ProductCurrency\": \"\",\n      \"ExchangeRate\": 0,\n      \"ForeignCurrencyUnitPrice\": 0,\n      \"TotalVAT\": 216,\n      \"LineDiscount\": 0,\n      \"DiscountedUnitPriceLocal\": 0,\n      \"Discount1\": 0,\n      \"Discount2\": 0,\n      \"Discount3\": 0,\n      \"Discount4\": 0,\n      \"Discount5\": 0,\n      \"WithholdingRate\": 0,\n      \"WithholdingAmount\": 0,\n      \"SpecialConsumptionTaxRate\": 0,\n      \"SpecialConsumptionTaxAmount\": 0,\n      \"CommunicationTaxRate\": 0,\n      \"CommunicationTaxAmount\": 0,\n      \"WithholdingTaxRate\": 0,\n      \"WithholdingTaxAmount\": 0,\n      \"AccommodationTaxRate\": 0,\n      \"AccommodationTaxAmount\": 0,\n      \"ShipmentNumber\": \"\",\n      \"CarrierName\": \"\",\n      \"TrackingLink\": \"\",\n      \"SerialNumber\": \"\",\n      \"LinkedProductId\": \"\",\n      \"LineStatus\": \"\",\n      \"LinePackageId\": \"\",\n      \"LineNote\": \"Test satir notu\"\n    }\n  ],\n  \"InvoiceAddress\": {\n    \"FirstName\": \"Ahmet\",\n    \"LastName\": \"Yilmaz\",\n    \"NationalId\": \"12345678901\",\n    \"CompanyName\": \"\",\n    \"TaxNumber\": \"\",\n    \"TaxOffice\": \"\",\n    \"Email\": \"ahmet@test.com\",\n    \"Phone\": \"05551234567\",\n    \"FullAddress\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n    \"District\": \"Besiktas\",\n    \"City\": \"Istanbul\",\n    \"Country\": \"TR\",\n    \"PostalCode\": \"34330\"\n  },\n  \"OrderInfo\": {\n    \"OrderNumber\": \"TEST-BIREYSEL-001\",\n    \"InvoiceEmail\": \"ahmet@test.com\",\n    \"DeliveryAddress\": {\n      \"FullName\": \"Ahmet Yilmaz\",\n      \"CompanyName\": \"\",\n      \"Email\": \"ahmet@test.com\",\n      \"Phone\": \"05551234567\",\n      \"FullAddress\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n      \"District\": \"Besiktas\",\n      \"City\": \"Istanbul\",\n      \"Country\": \"TR\",\n      \"PostalCode\": \"34330\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Order/CreateOrder",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Order",
+                "CreateOrder"
+              ]
+            },
+            "description": "Daha önce 'TEST-BIREYSEL-001' OrderNumber'ı ile bir sipariş oluşturulduktan sonra aynı numarayla tekrar gönderilen istek. İstek sessizce yok sayılır; status:false döner, OrderID 0 olur. Bu senaryoyu test etmeden önce 'Bireysel Müşteri' isteğini bir kez çalıştırmış olmanız gerekir."
+          },
+          "response": [
+            {
+              "name": "200 OK — Mükerrer, status:false",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": false,\n  \"InvoiceStatus\": false,\n  \"InvoiceStatusMessage\": \"\",\n  \"OrderID\": 0,\n  \"ressonmessage\": \"Aynı OrderNumber ile daha önce oluşturulmuş bir sipariş bulundu.\",\n  \"OrderInvoiceNumber\": \"\",\n  \"OrderInvoiceLink\": \"\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "❌ Hata — InvoiceAddress null",
+          "id": "8efa9038-5c45-40a3-b064-9dc72708351f",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"OrderDate\": \"2026-08-28T10:00:00\",\n  \"GrandTotal\": 1416,\n  \"sendInvoice\": false,\n  \"Products\": [\n    {\n      \"ProductId\": 1,\n      \"ProductCode\": \"STK-0001\",\n      \"ProductName\": \"Test Urunu A\",\n      \"Barcode\": \"8690000000001\",\n      \"GrossPrice\": 600,\n      \"Quantity\": 2,\n      \"WarehouseId\": 1,\n      \"Unit\": \"ADET\",\n      \"VATRate\": 18,\n      \"VariantId\": 0,\n      \"SecondaryUnitQty\": 0,\n      \"ProductCurrency\": \"\",\n      \"ExchangeRate\": 0,\n      \"ForeignCurrencyUnitPrice\": 0,\n      \"TotalVAT\": 216,\n      \"LineDiscount\": 0,\n      \"DiscountedUnitPriceLocal\": 0,\n      \"Discount1\": 0,\n      \"Discount2\": 0,\n      \"Discount3\": 0,\n      \"Discount4\": 0,\n      \"Discount5\": 0,\n      \"WithholdingRate\": 0,\n      \"WithholdingAmount\": 0,\n      \"SpecialConsumptionTaxRate\": 0,\n      \"SpecialConsumptionTaxAmount\": 0,\n      \"CommunicationTaxRate\": 0,\n      \"CommunicationTaxAmount\": 0,\n      \"WithholdingTaxRate\": 0,\n      \"WithholdingTaxAmount\": 0,\n      \"AccommodationTaxRate\": 0,\n      \"AccommodationTaxAmount\": 0,\n      \"ShipmentNumber\": \"\",\n      \"CarrierName\": \"\",\n      \"TrackingLink\": \"\",\n      \"SerialNumber\": \"\",\n      \"LinkedProductId\": \"\",\n      \"LineStatus\": \"\",\n      \"LinePackageId\": \"\",\n      \"LineNote\": \"Test satir notu\"\n    }\n  ],\n  \"InvoiceAddress\": null,\n  \"OrderInfo\": {\n    \"OrderNumber\": \"TEST-HATA-001\",\n    \"InvoiceEmail\": \"ahmet@test.com\",\n    \"DeliveryAddress\": {\n      \"FullName\": \"Ahmet Yilmaz\",\n      \"CompanyName\": \"\",\n      \"Email\": \"ahmet@test.com\",\n      \"Phone\": \"05551234567\",\n      \"FullAddress\": \"Levent Mah. Buyukdere Cad. No:1\",\n      \"District\": \"Besiktas\",\n      \"City\": \"Istanbul\",\n      \"Country\": \"TR\",\n      \"PostalCode\": \"34330\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Order/CreateOrder",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Order",
+                "CreateOrder"
+              ]
+            },
+            "description": "InvoiceAddress alanı null gönderildiğinde sunucunun döndürdüğü hata senaryosunu doğrulamak için kullanılır. Yanıt yine HTTP 200 ile gelir ancak status:false ve ressonmessage alanında 'Object reference' istisnası döner."
+          },
+          "response": [
+            {
+              "name": "200 OK — Hatalı (status:false)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": false,\n  \"InvoiceStatus\": false,\n  \"InvoiceStatusMessage\": \"\",\n  \"OrderID\": -1,\n  \"ressonmessage\": \"Object reference not set to an instance of an object.\",\n  \"OrderInvoiceNumber\": \"\",\n  \"OrderInvoiceLink\": \"\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Sipariş Listesi — Sipariş Numarasına Göre",
+          "id": "8306413c-ba00-4e91-b91c-07dea6e8c89c",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Order/OrderList?orderNumber=TEST-2026-001",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Order",
+                "OrderList"
+              ],
+              "query": [
+                {
+                  "key": "orderNumber",
+                  "value": "TEST-2026-001"
+                }
+              ]
+            },
+            "description": "orderNumber ile Sipariş No veya Fatura No alanlarından biriyle eşleşen kayıtları getirir. İstek gövdesi kullanılmaz. Eşleşen kayıt yoksa HTTP 400 döner."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"orderCount\": 1,\n  \"orders\": [\n    {\n      \"id\": 154820,\n      \"orderNumber\": \"TEST-2026-001\",\n      \"customer\": \"Ahmet Yilmaz\",\n      \"orderDate\": \"2026-08-20T10:00:00\",\n      \"totalAmount\": 1416,\n      \"platform\": \"Web Sitesi\",\n      \"deliveryPerson\": \"Kargo\",\n      \"packageStatus\": \"Hazirlaniyor\",\n      \"isMicroExport\": false,\n      \"customerId\": 482,\n      \"transactionType\": \"Satis\",\n      \"isEInvoiceSent\": true,\n      \"invoiceDate\": \"2026-08-20T10:05:00\",\n      \"shippingAddress\": {\n        \"firstName\": \"Ahmet\",\n        \"lastName\": \"Yilmaz\",\n        \"orderEmail\": \"ahmet@test.com\",\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\"\n      },\n      \"billingAddress\": {\n        \"companyName\": \"\",\n        \"taxOffice\": \"\",\n        \"taxNumber\": \"\",\n        \"contactPerson\": \"\",\n        \"nationalId\": \"12345678901\",\n        \"paymentTermDays\": 0,\n        \"discountRate\": 0,\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\"\n      },\n      \"items\": [\n        {\n          \"stockId\": 1,\n          \"stockCode\": \"STK-0001\",\n          \"productName\": \"Test Urunu A\",\n          \"quantity\": 2,\n          \"unitPriceExclVAT\": 600,\n          \"currency\": \"TRY\",\n          \"vatRate\": 18,\n          \"discountedPrice\": 0,\n          \"totalVAT\": 216,\n          \"barcode\": \"8690000000001\",\n          \"shipmentNumber\": \"\",\n          \"cargoCompany\": \"\",\n          \"status\": \"\",\n          \"lineDescription\": \"Test satir notu\"\n        }\n      ]\n    }\n  ]\n}"
+            },
+            {
+              "name": "400 Bad Request — Kayıt Bulunamadı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "Gönderilen sipariş numarasını kontrol ediniz. İlgili sipariş numarasına ait kayıt bulunamadı."
+            }
+          ]
+        },
+        {
+          "name": "Sipariş Listesi — Filtresiz (Son 100 Sipariş)",
+          "id": "4f652760-622d-495b-92f0-1e8636e906ab",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Order/OrderList",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Order",
+                "OrderList"
+              ]
+            },
+            "description": "orderNumber gönderilmeden çağrıldığında, iptal edilmemiş siparişlerin en güncel 100 kaydını (islemID DESC) döner."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"orderCount\": 1,\n  \"orders\": [\n    {\n      \"id\": 154820,\n      \"orderNumber\": \"TEST-2026-001\",\n      \"customer\": \"Ahmet Yilmaz\",\n      \"orderDate\": \"2026-08-20T10:00:00\",\n      \"totalAmount\": 1416,\n      \"platform\": \"Web Sitesi\",\n      \"deliveryPerson\": \"Kargo\",\n      \"packageStatus\": \"Hazirlaniyor\",\n      \"isMicroExport\": false,\n      \"customerId\": 482,\n      \"transactionType\": \"Satis\",\n      \"isEInvoiceSent\": true,\n      \"invoiceDate\": \"2026-08-20T10:05:00\",\n      \"shippingAddress\": {\n        \"firstName\": \"Ahmet\",\n        \"lastName\": \"Yilmaz\",\n        \"orderEmail\": \"ahmet@test.com\",\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\"\n      },\n      \"billingAddress\": {\n        \"companyName\": \"\",\n        \"taxOffice\": \"\",\n        \"taxNumber\": \"\",\n        \"contactPerson\": \"\",\n        \"nationalId\": \"12345678901\",\n        \"paymentTermDays\": 0,\n        \"discountRate\": 0,\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\"\n      },\n      \"items\": [\n        {\n          \"stockId\": 1,\n          \"stockCode\": \"STK-0001\",\n          \"productName\": \"Test Urunu A\",\n          \"quantity\": 2,\n          \"unitPriceExclVAT\": 600,\n          \"currency\": \"TRY\",\n          \"vatRate\": 18,\n          \"discountedPrice\": 0,\n          \"totalVAT\": 216,\n          \"barcode\": \"8690000000001\",\n          \"shipmentNumber\": \"\",\n          \"cargoCompany\": \"\",\n          \"status\": \"\",\n          \"lineDescription\": \"Test satir notu\"\n        }\n      ]\n    }\n  ]\n}"
+            },
+            {
+              "name": "400 Bad Request — Hiç Kayıt Yok",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "Listelenecek sipariş bulunamadı."
+            }
+          ]
         }
       ]
     },
@@ -274,7 +712,7 @@
       "item": [
         {
           "name": "Ödeme Oluştur — Nakit Tahsilat",
-          "id": "92864202-a9da-4fba-a18d-4e4e7afe7bdc",
+          "id": "68f2228a-8ed0-4f6e-9d95-e39a597deaad",
           "request": {
             "method": "POST",
             "header": [
@@ -408,7 +846,7 @@
         },
         {
           "name": "Ödeme Oluştur — Gelen Havale / EFT",
-          "id": "79bd05a6-6748-4f57-9948-846a38484aa6",
+          "id": "cbd47a7a-f6e5-49da-a118-a3cd567da5c1",
           "request": {
             "method": "POST",
             "header": [
@@ -547,7 +985,7 @@
       "item": [
         {
           "name": "Müşteri Listesi — Filtresiz (Varsayılan)",
-          "id": "56e098c6-182f-4883-9eb5-597238cf24e1",
+          "id": "a4eed0be-b133-4036-bf70-7b201da3a48e",
           "request": {
             "method": "POST",
             "header": [
@@ -638,7 +1076,7 @@
         },
         {
           "name": "Müşteri Listesi — Filtreli ve Sıralı",
-          "id": "3c4e454e-2a1f-484c-8b15-06fa8debec52",
+          "id": "cbb1a2a3-071a-4619-bf22-66f477cdad22",
           "request": {
             "method": "POST",
             "header": [
