@@ -105,3 +105,78 @@ public sealed class StockUpdateResponse
     public int StockQuantity { get; set; }
     public StockPriceResponse? StockPrice { get; set; }
 }
+
+// docs/Product_API_Dokumani.docx bölüm 5 (ProductList) ile birebir eşleşir.
+
+public sealed class ProductListRequest
+{
+    public string StockCode { get; set; } = "";  // Kısmi eşleşme (LIKE %değer%)
+    public string Barcode { get; set; } = "";       // Tam eşleşme
+    public int Page { get; set; } = 1;
+    public int Limit { get; set; } = 100;
+}
+
+public sealed class ProductListResponse
+{
+    public ProductDetail[] ProductDetails { get; set; } = Array.Empty<ProductDetail>();
+}
+
+public sealed class ProductDetail
+{
+    public string? StockCode { get; set; }
+    public string? ProductName { get; set; }
+    public string? Color { get; set; }
+    public string? Size { get; set; }
+    public string? VariantCode { get; set; }
+    public string? Barcode { get; set; }
+    public string? Category { get; set; }
+    public string? Brand { get; set; }
+    public int StockQuantity { get; set; }
+    public decimal SalePrice { get; set; }
+    public int VAT { get; set; }
+    public int MainProductId { get; set; }
+    public int VariantId { get; set; }
+}
+
+// docs/Product_API_Dokumani.docx bölüm 6 (StockTransactionHistory) ile birebir eşleşir.
+
+public sealed class StockTransactionRequest
+{
+    public required int ProductId { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public string TransactionType { get; set; } = "";  // Tam eşleşme (İşlem Türü)
+    public int Page { get; set; } = 1;
+    public int Limit { get; set; } = 100;
+}
+
+public sealed class StockTransactionResponse
+{
+    public bool IsSuccessful { get; set; }
+    public string? Message { get; set; }
+    public int RecordCount { get; set; }
+    public List<StockTransactionItem> Transactions { get; set; } = new();
+}
+
+public sealed class StockTransactionItem
+{
+    public int Id { get; set; }
+    public string? Barcode { get; set; }
+    public string? ProductName { get; set; }
+    public string? TransactionType { get; set; }
+    public string? TransactionNumber { get; set; }
+    public string? SerialNumber { get; set; }
+    public string? PerformedBy { get; set; }
+    public string? Salesperson { get; set; }
+    public string? Variant { get; set; }
+    public string? LineCurrency { get; set; }
+    public string? TransactionCurrency { get; set; }
+
+    /// <summary>"(G)" Giriş, "(Ç)" Çıkış, "(GÇ)" Giriş-Çıkış (depo transferi).</summary>
+    public string? MovementFlag { get; set; }
+    public decimal Quantity { get; set; }
+    public decimal BalanceAfter { get; set; }
+    public DateTime TransactionDate { get; set; }
+    public string? WarehouseName { get; set; }
+    public string? Description { get; set; }
+}

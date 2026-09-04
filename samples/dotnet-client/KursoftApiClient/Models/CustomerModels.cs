@@ -5,8 +5,8 @@ namespace KursoftApiClient.Models;
 
 public sealed class CustomerListRequest
 {
-    public string? CustomerCode { get; set; }
-    public string? CustomerName { get; set; }
+    public string? CustomerCode { get; set; }  // Tam eşleşme (LIKE değil)
+    public string? CustomerName { get; set; }  // Kısmi eşleşme (LIKE %değer%)
     public string? TaxNumber { get; set; }
     public string? City { get; set; }
     public string? CustomerGroup { get; set; }
@@ -67,6 +67,11 @@ public sealed class TransactionHistoryRequest
     public required string Currency { get; set; }
     public int Filter { get; set; } = 0;
     public string Search { get; set; } = "";
+
+    // StartDate/EndDate gönderilirse Year'ın satır filtresi olarak etkisi kalkar
+    // (yalnızca devir bakiyesi hesaplamasının başlangıç yılını belirlemek için kullanılır).
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 }
 
 public sealed class TransactionHistoryResponse

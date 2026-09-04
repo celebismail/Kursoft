@@ -14,7 +14,12 @@ public sealed class OrderListResponse
 public sealed class OrderListItem
 {
     public int Id { get; set; }
+
+    // Sipariş numarası boşsa otomatik olarak Fatura Belge No'ya (InvoiceNumer) düşer.
     public string? OrderNumber { get; set; }
+
+    // API'deki alan adı "InvoiceNumer" şeklindedir (yazım hatası korunmuştur).
+    public string? InvoiceNumer { get; set; }
     public string? Customer { get; set; }
     public DateTime OrderDate { get; set; }
     public decimal TotalAmount { get; set; }

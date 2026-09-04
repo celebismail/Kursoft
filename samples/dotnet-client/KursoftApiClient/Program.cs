@@ -6,7 +6,7 @@ using Microsoft.OpenApi.Models;
 // ============================================================================
 // KURSOFT ERP API — Örnek İstemci (Swagger UI ile interaktif test aracı)
 //
-// Bu proje, repo'daki docs/ klasöründe belgelenen sekiz endpoint'i
+// Bu proje, repo'daki docs/ klasöründe belgelenen on endpoint'i
 // tarayıcıdan tıklayarak (Postman gerekmeden) deneyebileceğiniz, Swagger UI
 // ile açılan bir ASP.NET Core Web API'dir. Her /demo/* rotası, gerçek
 // KURSOFT API'sine bir istek atıp yanıtı olduğu gibi size geri döner —
@@ -164,5 +164,25 @@ app.MapPost("/demo/stock-price-update", async (StockPriceUpdateRequest[] request
     .WithSummary("Stok Fiyat Güncelle (StockPriceUpdate)")
     .WithDescription("POST /api/v2/Product/StockPriceUpdate — docs/Product_API_Dokumani.docx (bölüm 4). ⚠️ Şu an yalnızca varyantsız ürünlerde çalışır.")
     .Produces<List<StockUpdateResponse>>(200);
+
+// ----------------------------------------------------------------------
+// 9) Ürün Listesi — docs/Product_API_Dokumani.docx (bölüm 5)
+// ----------------------------------------------------------------------
+app.MapPost("/demo/product-list", async (ProductListRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.GetProductListAsync(request))))
+    .WithTags("4. Ürün")
+    .WithSummary("Ürün Listesi (ProductList)")
+    .WithDescription("POST /api/v2/Product/ProductList — docs/Product_API_Dokumani.docx (bölüm 5). Sayfalı, StockCode/Barcode ile filtrelenebilir.")
+    .Produces<ProductListResponse>(200);
+
+// ----------------------------------------------------------------------
+// 10) Stok İşlem Takibi — docs/Product_API_Dokumani.docx (bölüm 6)
+// ----------------------------------------------------------------------
+app.MapPost("/demo/stock-transaction-history", async (StockTransactionRequest request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.GetStockTransactionHistoryAsync(request))))
+    .WithTags("4. Ürün")
+    .WithSummary("Stok İşlem Takibi (StockTransactionHistory)")
+    .WithDescription("POST /api/v2/Product/StockTransactionHistory — docs/Product_API_Dokumani.docx (bölüm 6). Bir ürünün stok hareket dökümünü ve kümülatif bakiyesini döner.")
+    .Produces<StockTransactionResponse>(200);
 
 app.Run();

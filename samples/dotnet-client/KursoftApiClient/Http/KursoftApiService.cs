@@ -19,6 +19,8 @@ namespace KursoftApiClient.Http;
 ///   - CreateProductAsync       → docs/Product_API_Dokumani.docx (bölüm 2)
 ///   - UpdateStockAsync         → docs/Product_API_Dokumani.docx (bölüm 3)
 ///   - UpdateStockPriceAsync    → docs/Product_API_Dokumani.docx (bölüm 4)
+///   - GetProductListAsync      → docs/Product_API_Dokumani.docx (bölüm 5)
+///   - GetStockTransactionHistoryAsync → docs/Product_API_Dokumani.docx (bölüm 6)
 ///
 /// Tüm dokümanlarda belirtildiği gibi her istekte Username/Password
 /// header'ları zorunludur; bu sınıf bunu HttpClient.DefaultRequestHeaders
@@ -110,6 +112,20 @@ public sealed class KursoftApiService : IDisposable
     {
         using var response = await PostJsonAsync("api/v2/Product/StockPriceUpdate", request, ct);
         return await ReadJsonAsync<List<StockUpdateResponse>>(response, ct);
+    }
+
+    /// <summary>Ürün Listesi — POST /api/v2/Product/ProductList</summary>
+    public async Task<ProductListResponse?> GetProductListAsync(ProductListRequest request, CancellationToken ct = default)
+    {
+        using var response = await PostJsonAsync("api/v2/Product/ProductList", request, ct);
+        return await ReadJsonAsync<ProductListResponse>(response, ct);
+    }
+
+    /// <summary>Stok İşlem Takibi — POST /api/v2/Product/StockTransactionHistory</summary>
+    public async Task<StockTransactionResponse?> GetStockTransactionHistoryAsync(StockTransactionRequest request, CancellationToken ct = default)
+    {
+        using var response = await PostJsonAsync("api/v2/Product/StockTransactionHistory", request, ct);
+        return await ReadJsonAsync<StockTransactionResponse>(response, ct);
     }
 
     // ---- yardımcı metodlar ----
