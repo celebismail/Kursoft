@@ -6,7 +6,7 @@ using Microsoft.OpenApi.Models;
 // ============================================================================
 // KURSOFT ERP API — Örnek İstemci (Swagger UI ile interaktif test aracı)
 //
-// Bu proje, repo'daki docs/ klasöründe belgelenen on endpoint'i
+// Bu proje, repo'daki docs/ klasöründe belgelenen on bir endpoint'i
 // tarayıcıdan tıklayarak (Postman gerekmeden) deneyebileceğiniz, Swagger UI
 // ile açılan bir ASP.NET Core Web API'dir. Her /demo/* rotası, gerçek
 // KURSOFT API'sine bir istek atıp yanıtı olduğu gibi size geri döner —
@@ -184,5 +184,15 @@ app.MapPost("/demo/stock-transaction-history", async (StockTransactionRequest re
     .WithSummary("Stok İşlem Takibi (StockTransactionHistory)")
     .WithDescription("POST /api/v2/Product/StockTransactionHistory — docs/Product_API_Dokumani.docx (bölüm 6). Bir ürünün stok hareket dökümünü ve kümülatif bakiyesini döner.")
     .Produces<StockTransactionResponse>(200);
+
+// ----------------------------------------------------------------------
+// 11) Stok Bilgisi Güncelle — docs/Product_API_Dokumani.docx (bölüm 7)
+// ----------------------------------------------------------------------
+app.MapPost("/demo/stock-info-update", async (StockInfoUpdateRequest[] request, KursoftApiService api, ApiSettings apiSettings) =>
+    await InvokeAsync(apiSettings, async () => Results.Ok(await api.UpdateStockInfoAsync(request))))
+    .WithTags("4. Ürün")
+    .WithSummary("Stok Bilgisi Güncelle (StockInfoUpdate)")
+    .WithDescription("POST /api/v2/Product/StockInfoUpdate — docs/Product_API_Dokumani.docx (bölüm 7). WebAudit ve/veya isActive günceller; ikisi de nullable'dır.")
+    .Produces<List<StockInfoUpdateResponse>>(200);
 
 app.Run();

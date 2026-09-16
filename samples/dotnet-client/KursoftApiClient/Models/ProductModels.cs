@@ -113,7 +113,7 @@ public sealed class ProductListRequest
     public string StockCode { get; set; } = "";  // Kısmi eşleşme (LIKE %değer%)
     public string Barcode { get; set; } = "";       // Tam eşleşme
     public int Page { get; set; } = 1;
-    public int Limit { get; set; } = 100;
+    public int Limit { get; set; } = 250;  // Üst sınır 250 (önceden 100'dü)
 }
 
 public sealed class ProductListResponse
@@ -133,9 +133,40 @@ public sealed class ProductDetail
     public string? Brand { get; set; }
     public int StockQuantity { get; set; }
     public decimal SalePrice { get; set; }
+    public decimal PurchasePrice { get; set; }
+    public string? Currency { get; set; }
     public int VAT { get; set; }
     public int MainProductId { get; set; }
     public int VariantId { get; set; }
+    public DateTime CreationDate { get; set; }
+    public string? Description { get; set; }
+    public string? OemCode { get; set; }
+    public bool Status { get; set; }
+    public bool WebAudit { get; set; }
+    public string? SpecialArea1 { get; set; }
+    public string? SpecialArea2 { get; set; }
+    public string? SpecialArea3 { get; set; }
+    public string? SpecialArea4 { get; set; }
+    public string? SpecialArea5 { get; set; }
+    public StockPriceResponse? StockPrice { get; set; }
+}
+
+// docs/Product_API_Dokumani.docx bölüm 7 (StockInfoUpdate) ile birebir eşleşir.
+
+public sealed class StockInfoUpdateRequest
+{
+    public required string Barcode { get; set; }
+    public bool? WebAudit { get; set; }
+    public bool? IsActive { get; set; }
+}
+
+public sealed class StockInfoUpdateResponse
+{
+    public bool Status { get; set; }
+    public string StatusMessage { get; set; } = "";
+    public string? Barcode { get; set; }
+    public bool WebAudit { get; set; }
+    public bool IsActive { get; set; }
 }
 
 // docs/Product_API_Dokumani.docx bölüm 6 (StockTransactionHistory) ile birebir eşleşir.

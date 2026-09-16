@@ -41,6 +41,12 @@ public sealed class CustomerListItem
     public string? Currency { get; set; }
     public bool IsActive { get; set; }
     public string? CustomerGroup { get; set; }
+
+    // API'deki alan adı "PaymentmMethod" şeklindedir (yazım hatası korunmuştur).
+    public string? PaymentmMethod { get; set; }
+    public string? MaturityPeriod { get; set; }
+    public decimal SpecialDiscount { get; set; }
+    public string? SpecialCode { get; set; }
 }
 
 // docs/TransactionHistory_API_Dokumani.docx dosyasındaki

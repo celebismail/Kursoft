@@ -1,6 +1,6 @@
 # KURSOFT API — Örnek İstemci (Swagger UI)
 
-`docs/` klasöründeki on endpoint'i (Sipariş Oluştur, Sipariş Listesi, Ödeme Oluştur, Müşteri Listesi, Cari İşlem Takibi, Ürün Ekle, Stok Güncelle, Stok Fiyat Güncelle, Ürün Listesi, Stok İşlem Takibi) tarayıcıdan tıklayarak deneyebileceğiniz, Swagger UI ile açılan bir ASP.NET Core Web API.
+`docs/` klasöründeki on bir endpoint'i (Sipariş Oluştur, Sipariş Listesi, Ödeme Oluştur, Müşteri Listesi, Cari İşlem Takibi, Ürün Ekle, Stok Güncelle, Stok Fiyat Güncelle, Ürün Listesi, Stok İşlem Takibi, Stok Bilgisi Güncelle) tarayıcıdan tıklayarak deneyebileceğiniz, Swagger UI ile açılan bir ASP.NET Core Web API.
 
 Bu proje "sahte" bir API değildir — her `/demo/*` rotası, arka planda gerçek KURSOFT API'sine bir istek atar ve yanıtı olduğu gibi size geri döndürür. Yani Postman'e alternatif, tarayıcı içinde çalışan interaktif bir test aracıdır.
 
@@ -64,6 +64,7 @@ Swagger UI'da endpoint'ler dokümanlardaki gibi dört grupta listelenir: **1. Si
 | 4. Ürün | `POST /demo/stock-price-update` | `POST /api/v2/Product/StockPriceUpdate` |
 | 4. Ürün | `POST /demo/product-list` | `POST /api/v2/Product/ProductList` |
 | 4. Ürün | `POST /demo/stock-transaction-history` | `POST /api/v2/Product/StockTransactionHistory` |
+| 4. Ürün | `POST /demo/stock-info-update` | `POST /api/v2/Product/StockInfoUpdate` |
 
 ## Proje yapısı
 
@@ -95,6 +96,11 @@ builder.Services.AddSingleton<KursoftApiService>();
 ```
 
 ## Notlar
+
+- `OrderListItem.RemainingAmount` ve `InvoiceExchangeRate`, `docs/OrderList_API_Dokumani.docx` bölüm 3.2'de belgelenen yeni alanlardır.
+- `CustomerListItem.PaymentmMethod` alan adı API'de olduğu gibi (yazım hatasıyla) korunmuştur.
+- `ProductListRequest.Limit` üst sınırı artık 250'dir (önceden 100'dü).
+- `StockInfoUpdateRequest.WebAudit` ve `IsActive` nullable'dır (`bool?`); yalnızca gönderilen (null olmayan) alan sunucuda güncellenir.
 
 - `TransactionHistoryRequest.Year` her zaman zorunludur (devir bakiyesi hesaplamasının başlangıç noktasıdır); ancak `StartDate`/`EndDate` gönderilirse `Year`'ın satır filtresi olarak etkisi kalkar — bkz. `docs/TransactionHistory_API_Dokumani.docx` bölüm 2.3.
 - `CustomerListRequest.CustomerCode` artık **tam eşleşme** yapar (önceden kısmi eşleşmeydi); `CustomerName` hâlâ kısmi eşleşmedir.

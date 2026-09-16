@@ -54,6 +54,7 @@ sağlar. Amaç, entegrasyon sürecini dokümanı satır satır okuyup deneme-yan
 | 4. Ürün | `POST /api/v2/Product/StockPriceUpdate` | Barkoda göre fiyat kademelerini toplu günceller (en fazla 100 kayıt). |
 | 4. Ürün | `POST /api/v2/Product/ProductList` | Ürün/varyant listesini sayfalı ve filtreli olarak döndürür. |
 | 4. Ürün | `POST /api/v2/Product/StockTransactionHistory` | Bir ürünün stok hareket dökümünü ve kümülatif bakiyesini döndürür. |
+| 4. Ürün | `POST /api/v2/Product/StockInfoUpdate` | Barkoda göre web denetim ve aktiflik bilgisini günceller (en fazla 100 kayıt). |
 
 Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs/` klasöründeki ilgili Word dokümanına bakınız.
 
@@ -66,7 +67,7 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | `docs/PaymentCreate_API_Dokumani.docx` | Ödeme/nakit hareket oluşturma — işlem türü (enum) referansı dahil |
 | `docs/Customerlist_API_Dokumani.docx` | Müşteri listesi — filtre ve sıralama alanları, OrderBy beyaz listesi |
 | `docs/TransactionHistory_API_Dokumani.docx` | Cari işlem takibi — filtre enum'u, devreden bakiye mantığı, kümülatif bakiye hesaplama |
-| `docs/Product_API_Dokumani.docx` | Ürün ekleme, stok/fiyat güncelleme, ürün listesi, stok işlem takibi (5 endpoint tek dokümanda) |
+| `docs/Product_API_Dokumani.docx` | Ürün ekleme, stok/fiyat/bilgi güncelleme, ürün listesi, stok işlem takibi (6 endpoint tek dokümanda) |
 
 ## Repo Yapısı
 
@@ -112,6 +113,7 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 | 2026-08-28 | 4 endpoint'i çağıran çalışan bir .NET 8 örnek istemci eklendi (`samples/dotnet-client/`). |
 | 2026-08-28 | Cari İşlem Takibi (TransactionHistory) ve Ürün/Stok API'leri (CreateProduct, StockUpdate, StockPriceUpdate) eklendi. Örnek istemci konsol yerine Swagger UI ile açılan interaktif bir ASP.NET Core Web API'ye dönüştürüldü (8 endpoint). |
 | 2026-09-03 | TransactionHistory'e StartDate/EndDate filtresi eklendi (tarih aralığı gönderilince Donem/Year satır filtresi devre dışı kalır). OrderList'e InvoiceNumer alanı eklendi, sipariş no eşleşmesi artık S_BELGENO'yu da kapsıyor. Customerlist'te CustomerCode artık tam eşleşme yapıyor. Ürün API'sine ProductList ve StockTransactionHistory endpoint'leri eklendi (toplam 10 endpoint). Örnek istemci ve Postman koleksiyonu bu değişikliklerle güncellendi. |
+| 2026-09-16 | OrderList'e RemainingAmount ve InvoiceExchangeRate eklendi. Customerlist'e PaymentmMethod, MaturityPeriod, SpecialDiscount, SpecialCode eklendi. ProductList Limit üst sınırı 100'den 250'ye çıkarıldı; PurchasePrice, Currency, CreationDate, Description, OemCode, Status, WebAudit, SpecialArea1-5 ve StockPrice alanları eklendi. Yeni endpoint: StockInfoUpdate (web denetim / aktiflik güncelleme) — toplam 11 endpoint. Örnek istemci ve Postman koleksiyonu bu değişikliklerle güncellendi. |
 
 ## Destek
 

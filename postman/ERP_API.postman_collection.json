@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "1581a188-1f3c-43d3-927e-a3514c637064",
     "name": "KURSOFT ERP Entegrasyon API'leri",
-    "description": "KURSOFT ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma / Listeleme (Order/CreateOrder, Order/OrderList)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi ve Cari İşlem Takibi (Customer/Customerlist, Customer/TransactionHistory)\n- Ürün, Stok ve Fiyat Yönetimi (Product/CreateProduct, Product/StockUpdate, Product/StockPriceUpdate, Product/ProductList, Product/StockTransactionHistory)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: destek@kursoft.com.tr · kursoft.com.tr",
+    "description": "KURSOFT ERP sistemine ait entegrasyon endpoint'lerinin referans koleksiyonu.\n\nBu koleksiyon şu servisleri kapsar:\n- Sipariş Oluşturma / Listeleme (Order/CreateOrder, Order/OrderList)\n- Nakit Hareket / Ödeme Oluşturma (Payment/PaymentCreate)\n- Müşteri Listesi ve Cari İşlem Takibi (Customer/Customerlist, Customer/TransactionHistory)\n- Ürün, Stok ve Fiyat Yönetimi (Product/CreateProduct, Product/StockUpdate, Product/StockPriceUpdate, Product/ProductList, Product/StockTransactionHistory, Product/StockInfoUpdate)\n\n## Kullanım\n1. Bu koleksiyonu Postman'e import edin.\n2. `environments/test.postman_environment.json` dosyasını da import edip aktif environment olarak seçin.\n3. `apiUsername` ve `apiPassword` değişkenlerini kendi bilgilerinizle doldurun (bu değerleri asla commit etmeyin).\n4. `baseURL` değişkenini size iletilen test/prod adresiyle güncelleyin.\n\nAlan açıklamaları, enum referansları ve hata kodları için `/docs` klasöründeki API referans dokümanlarına bakınız.\n\nİletişim: destek@kursoft.com.tr · kursoft.com.tr",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {
@@ -533,7 +533,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"orderCount\": 1,\n  \"orders\": [\n    {\n      \"id\": 154820,\n      \"orderNumber\": \"TEST-2026-001\",\n      \"invoiceNumer\": \"FTR-2026-00001\",\n      \"customer\": \"Ahmet Yilmaz\",\n      \"orderDate\": \"2026-08-20T10:00:00\",\n      \"totalAmount\": 1416,\n      \"platform\": \"Web Sitesi\",\n      \"deliveryPerson\": \"Kargo\",\n      \"packageStatus\": \"Hazirlaniyor\",\n      \"isMicroExport\": false,\n      \"customerId\": 482,\n      \"transactionType\": \"Satis\",\n      \"isEInvoiceSent\": true,\n      \"invoiceDate\": \"2026-08-20T10:05:00\",\n      \"shippingAddress\": {\n        \"firstName\": \"Ahmet\",\n        \"lastName\": \"Yilmaz\",\n        \"orderEmail\": \"ahmet@test.com\",\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\"\n      },\n      \"billingAddress\": {\n        \"companyName\": \"\",\n        \"taxOffice\": \"\",\n        \"taxNumber\": \"\",\n        \"contactPerson\": \"\",\n        \"nationalId\": \"12345678901\",\n        \"paymentTermDays\": 0,\n        \"discountRate\": 0,\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\"\n      },\n      \"items\": [\n        {\n          \"stockId\": 1,\n          \"stockCode\": \"STK-0001\",\n          \"productName\": \"Test Urunu A\",\n          \"quantity\": 2,\n          \"unitPriceExclVAT\": 600,\n          \"currency\": \"TRY\",\n          \"vatRate\": 18,\n          \"discountedPrice\": 0,\n          \"totalVAT\": 216,\n          \"barcode\": \"8690000000001\",\n          \"shipmentNumber\": \"\",\n          \"cargoCompany\": \"\",\n          \"status\": \"\",\n          \"lineDescription\": \"Test satir notu\"\n        }\n      ]\n    }\n  ]\n}"
+              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"orderCount\": 1,\n  \"orders\": [\n    {\n      \"id\": 154820,\n      \"orderNumber\": \"TEST-2026-001\",\n      \"invoiceNumer\": \"FTR-2026-00001\",\n      \"customer\": \"Ahmet Yilmaz\",\n      \"orderDate\": \"2026-08-20T10:00:00\",\n      \"totalAmount\": 1416,\n      \"platform\": \"Web Sitesi\",\n      \"deliveryPerson\": \"Kargo\",\n      \"packageStatus\": \"Hazirlaniyor\",\n      \"isMicroExport\": false,\n      \"customerId\": 482,\n      \"transactionType\": \"Satis\",\n      \"isEInvoiceSent\": true,\n      \"invoiceDate\": \"2026-08-20T10:05:00\",\n      \"shippingAddress\": {\n        \"firstName\": \"Ahmet\",\n        \"lastName\": \"Yilmaz\",\n        \"orderEmail\": \"ahmet@test.com\",\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\"\n      },\n      \"billingAddress\": {\n        \"companyName\": \"\",\n        \"taxOffice\": \"\",\n        \"taxNumber\": \"\",\n        \"contactPerson\": \"\",\n        \"nationalId\": \"12345678901\",\n        \"paymentTermDays\": 0,\n        \"discountRate\": 0,\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\"\n      },\n      \"items\": [\n        {\n          \"stockId\": 1,\n          \"stockCode\": \"STK-0001\",\n          \"productName\": \"Test Urunu A\",\n          \"quantity\": 2,\n          \"unitPriceExclVAT\": 600,\n          \"currency\": \"TRY\",\n          \"vatRate\": 18,\n          \"discountedPrice\": 0,\n          \"totalVAT\": 216,\n          \"barcode\": \"8690000000001\",\n          \"shipmentNumber\": \"\",\n          \"cargoCompany\": \"\",\n          \"status\": \"\",\n          \"lineDescription\": \"Test satir notu\"\n        }\n      ],\n      \"remainingAmount\": 0,\n      \"invoiceExchangeRate\": 1\n    }\n  ]\n}"
             },
             {
               "name": "400 Bad Request — Kayıt Bulunamadı",
@@ -658,7 +658,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"orderCount\": 1,\n  \"orders\": [\n    {\n      \"id\": 154820,\n      \"orderNumber\": \"TEST-2026-001\",\n      \"invoiceNumer\": \"FTR-2026-00001\",\n      \"customer\": \"Ahmet Yilmaz\",\n      \"orderDate\": \"2026-08-20T10:00:00\",\n      \"totalAmount\": 1416,\n      \"platform\": \"Web Sitesi\",\n      \"deliveryPerson\": \"Kargo\",\n      \"packageStatus\": \"Hazirlaniyor\",\n      \"isMicroExport\": false,\n      \"customerId\": 482,\n      \"transactionType\": \"Satis\",\n      \"isEInvoiceSent\": true,\n      \"invoiceDate\": \"2026-08-20T10:05:00\",\n      \"shippingAddress\": {\n        \"firstName\": \"Ahmet\",\n        \"lastName\": \"Yilmaz\",\n        \"orderEmail\": \"ahmet@test.com\",\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\"\n      },\n      \"billingAddress\": {\n        \"companyName\": \"\",\n        \"taxOffice\": \"\",\n        \"taxNumber\": \"\",\n        \"contactPerson\": \"\",\n        \"nationalId\": \"12345678901\",\n        \"paymentTermDays\": 0,\n        \"discountRate\": 0,\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\"\n      },\n      \"items\": [\n        {\n          \"stockId\": 1,\n          \"stockCode\": \"STK-0001\",\n          \"productName\": \"Test Urunu A\",\n          \"quantity\": 2,\n          \"unitPriceExclVAT\": 600,\n          \"currency\": \"TRY\",\n          \"vatRate\": 18,\n          \"discountedPrice\": 0,\n          \"totalVAT\": 216,\n          \"barcode\": \"8690000000001\",\n          \"shipmentNumber\": \"\",\n          \"cargoCompany\": \"\",\n          \"status\": \"\",\n          \"lineDescription\": \"Test satir notu\"\n        }\n      ]\n    }\n  ]\n}"
+              "body": "{\n  \"isSuccessful\": true,\n  \"message\": \"İstek başarılı.\",\n  \"orderCount\": 1,\n  \"orders\": [\n    {\n      \"id\": 154820,\n      \"orderNumber\": \"TEST-2026-001\",\n      \"invoiceNumer\": \"FTR-2026-00001\",\n      \"customer\": \"Ahmet Yilmaz\",\n      \"orderDate\": \"2026-08-20T10:00:00\",\n      \"totalAmount\": 1416,\n      \"platform\": \"Web Sitesi\",\n      \"deliveryPerson\": \"Kargo\",\n      \"packageStatus\": \"Hazirlaniyor\",\n      \"isMicroExport\": false,\n      \"customerId\": 482,\n      \"transactionType\": \"Satis\",\n      \"isEInvoiceSent\": true,\n      \"invoiceDate\": \"2026-08-20T10:05:00\",\n      \"shippingAddress\": {\n        \"firstName\": \"Ahmet\",\n        \"lastName\": \"Yilmaz\",\n        \"orderEmail\": \"ahmet@test.com\",\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\"\n      },\n      \"billingAddress\": {\n        \"companyName\": \"\",\n        \"taxOffice\": \"\",\n        \"taxNumber\": \"\",\n        \"contactPerson\": \"\",\n        \"nationalId\": \"12345678901\",\n        \"paymentTermDays\": 0,\n        \"discountRate\": 0,\n        \"address\": \"Levent Mah. Buyukdere Cad. No:1 Kat:5\",\n        \"phone\": \"05551234567\",\n        \"email\": \"ahmet@test.com\",\n        \"city\": \"Istanbul\",\n        \"district\": \"Besiktas\",\n        \"postalCode\": \"34330\"\n      },\n      \"items\": [\n        {\n          \"stockId\": 1,\n          \"stockCode\": \"STK-0001\",\n          \"productName\": \"Test Urunu A\",\n          \"quantity\": 2,\n          \"unitPriceExclVAT\": 600,\n          \"currency\": \"TRY\",\n          \"vatRate\": 18,\n          \"discountedPrice\": 0,\n          \"totalVAT\": 216,\n          \"barcode\": \"8690000000001\",\n          \"shipmentNumber\": \"\",\n          \"cargoCompany\": \"\",\n          \"status\": \"\",\n          \"lineDescription\": \"Test satir notu\"\n        }\n      ],\n      \"remainingAmount\": 0,\n      \"invoiceExchangeRate\": 1\n    }\n  ]\n}"
             },
             {
               "name": "400 Bad Request — Hiç Kayıt Yok",
@@ -1070,7 +1070,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 482,\n    \"customerCode\": \"CRI-0482\",\n    \"customerName\": \"Test Ticaret A.S.\",\n    \"authorizedPerson\": \"Mehmet Yilmaz\",\n    \"taxOffice\": \"Besiktas\",\n    \"taxNumber\": \"1234567890\",\n    \"phone\": \"02121234567\",\n    \"phone2\": \"\",\n    \"address\": \"Maslak Mah. Eski Buyukdere Cad. No:26\",\n    \"country\": \"Turkiye\",\n    \"city\": \"Istanbul\",\n    \"email\": \"info@testticaret.com\",\n    \"createdDate\": \"2021-03-14T00:00:00\",\n    \"balance\": 15420.5,\n    \"balanceType\": \"A\",\n    \"currency\": \"TRY\",\n    \"isActive\": true,\n    \"customerGroup\": \"Bayi\"\n  }\n]"
+              "body": "[\n  {\n    \"id\": 482,\n    \"customerCode\": \"CRI-0482\",\n    \"customerName\": \"Test Ticaret A.S.\",\n    \"authorizedPerson\": \"Mehmet Yilmaz\",\n    \"taxOffice\": \"Besiktas\",\n    \"taxNumber\": \"1234567890\",\n    \"phone\": \"02121234567\",\n    \"phone2\": \"\",\n    \"address\": \"Maslak Mah. Eski Buyukdere Cad. No:26\",\n    \"country\": \"Turkiye\",\n    \"city\": \"Istanbul\",\n    \"email\": \"info@testticaret.com\",\n    \"createdDate\": \"2021-03-14T00:00:00\",\n    \"balance\": 15420.5,\n    \"balanceType\": \"A\",\n    \"currency\": \"TRY\",\n    \"isActive\": true,\n    \"customerGroup\": \"Bayi\",\n    \"paymentmMethod\": \"Peşin\",\n    \"maturityPeriod\": \"30\",\n    \"specialDiscount\": 5,\n    \"specialCode\": \"VIP01\"\n  }\n]"
             }
           ]
         },
@@ -1161,7 +1161,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "[\n  {\n    \"id\": 482,\n    \"customerCode\": \"CRI-0482\",\n    \"customerName\": \"Test Ticaret A.S.\",\n    \"authorizedPerson\": \"Mehmet Yilmaz\",\n    \"taxOffice\": \"Besiktas\",\n    \"taxNumber\": \"1234567890\",\n    \"phone\": \"02121234567\",\n    \"phone2\": \"\",\n    \"address\": \"Maslak Mah. Eski Buyukdere Cad. No:26\",\n    \"country\": \"Turkiye\",\n    \"city\": \"Istanbul\",\n    \"email\": \"info@testticaret.com\",\n    \"createdDate\": \"2021-03-14T00:00:00\",\n    \"balance\": 15420.5,\n    \"balanceType\": \"A\",\n    \"currency\": \"TRY\",\n    \"isActive\": true,\n    \"customerGroup\": \"Bayi\"\n  }\n]"
+              "body": "[\n  {\n    \"id\": 482,\n    \"customerCode\": \"CRI-0482\",\n    \"customerName\": \"Test Ticaret A.S.\",\n    \"authorizedPerson\": \"Mehmet Yilmaz\",\n    \"taxOffice\": \"Besiktas\",\n    \"taxNumber\": \"1234567890\",\n    \"phone\": \"02121234567\",\n    \"phone2\": \"\",\n    \"address\": \"Maslak Mah. Eski Buyukdere Cad. No:26\",\n    \"country\": \"Turkiye\",\n    \"city\": \"Istanbul\",\n    \"email\": \"info@testticaret.com\",\n    \"createdDate\": \"2021-03-14T00:00:00\",\n    \"balance\": 15420.5,\n    \"balanceType\": \"A\",\n    \"currency\": \"TRY\",\n    \"isActive\": true,\n    \"customerGroup\": \"Bayi\",\n    \"paymentmMethod\": \"Peşin\",\n    \"maturityPeriod\": \"30\",\n    \"specialDiscount\": 5,\n    \"specialCode\": \"VIP01\"\n  }\n]"
             }
           ]
         },
@@ -1869,7 +1869,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"StockCode\": \"STK-0003\",\n  \"Barcode\": \"\",\n  \"Page\": 1,\n  \"Limit\": 100\n}",
+              "raw": "{\n  \"StockCode\": \"STK-0003\",\n  \"Barcode\": \"\",\n  \"Page\": 1,\n  \"Limit\": 250\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1932,9 +1932,10 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"productDetails\": [\n    {\n      \"stockCode\": \"STK-0003\",\n      \"productName\": \"Test Urunu C\",\n      \"color\": \"Siyah\",\n      \"size\": \"M\",\n      \"variantCode\": \"STK-0003-S-M\",\n      \"barcode\": \"8690000000003\",\n      \"category\": \"Elektronik\",\n      \"brand\": \"Örnek Tedarikçi\",\n      \"stockQuantity\": 45,\n      \"salePrice\": 750,\n      \"vat\": 20,\n      \"mainProductId\": 5821,\n      \"variantId\": 80770\n    }\n  ]\n}"
+              "body": "{\n  \"productDetails\": [\n    {\n      \"stockCode\": \"STK-0003\",\n      \"productName\": \"Test Urunu C\",\n      \"color\": \"Siyah\",\n      \"size\": \"M\",\n      \"variantCode\": \"STK-0003-S-M\",\n      \"barcode\": \"8690000000003\",\n      \"category\": \"Elektronik\",\n      \"brand\": \"Örnek Tedarikçi\",\n      \"stockQuantity\": 45,\n      \"salePrice\": 750,\n      \"vat\": 20,\n      \"mainProductId\": 5821,\n      \"variantId\": 80770,\n      \"purchasePrice\": 500,\n      \"currency\": \"TRY\",\n      \"creationDate\": \"2026-08-28T10:00:00\",\n      \"description\": \"Ayrıntılı ürün açıklaması\",\n      \"oemCode\": \"OEM-1234\",\n      \"status\": true,\n      \"webAudit\": true,\n      \"specialArea1\": \"\",\n      \"specialArea2\": \"\",\n      \"specialArea3\": \"\",\n      \"specialArea4\": \"\",\n      \"specialArea5\": \"\",\n      \"stockPrice\": {\n        \"price1\": 750,\n        \"price2\": 0,\n        \"price3\": 0,\n        \"price4\": 0,\n        \"price5\": 0,\n        \"price6\": 0,\n        \"price7\": 0,\n        \"price8\": 0,\n        \"price9\": 0,\n        \"price10\": 0\n      }\n    }\n  ]\n}"
             }
-          ]
+          ],
+          "description": "undefined Limit üst sınırı artık 250'dir (önceden 100'dü)."
         },
         {
           "name": "Stok İşlem Takibi",
@@ -2067,6 +2068,140 @@
                 }
               ],
               "body": "ProductId zorunludur ve 0'dan büyük olmalıdır."
+            }
+          ]
+        },
+        {
+          "name": "Stok Bilgisi Güncelle",
+          "id": "4ca79b38-37df-4e8c-a983-935dcdff920c",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Username",
+                "value": "{{apiUsername}}",
+                "type": "text"
+              },
+              {
+                "key": "Password",
+                "value": "{{apiPassword}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"Barcode\": \"8690000000001\",\n    \"WebAudit\": true,\n    \"isActive\": true\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseURL}}/api/v2/Product/StockInfoUpdate",
+              "host": [
+                "{{baseURL}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "Product",
+                "StockInfoUpdate"
+              ]
+            },
+            "description": "Barkoda göre WebAudit (B2B görünürlük) ve/veya isActive (aktiflik) bilgisini günceller. İkisi de nullable'dır; yalnızca gönderilen alan güncellenir."
+          },
+          "response": [
+            {
+              "name": "200 OK — Başarılı",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"status\": true,\n    \"statusMessage\": \"İşlem başarılı, stok bilgileri güncellendi.\",\n    \"barcode\": \"8690000000001\",\n    \"webAudit\": true,\n    \"isActive\": true\n  }\n]"
+            },
+            {
+              "name": "200 OK — Güncellenecek Alan Yok",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Username",
+                    "value": "{{apiUsername}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "Password",
+                    "value": "{{apiPassword}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{baseURL}}",
+                  "host": [
+                    "{{baseURL}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"status\": false,\n    \"statusMessage\": \"Güncellenecek alan bulunamadı.\",\n    \"barcode\": \"8690000000001\",\n    \"webAudit\": false,\n    \"isActive\": false\n  }\n]"
             }
           ]
         }

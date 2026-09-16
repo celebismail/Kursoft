@@ -23,6 +23,12 @@ public sealed class OrderListItem
     public string? Customer { get; set; }
     public DateTime OrderDate { get; set; }
     public decimal TotalAmount { get; set; }
+
+    /// <summary>Faturanın FIFO'ya göre tahsilatları düşüldükten sonra kalan tutarı.</summary>
+    public decimal RemainingAmount { get; set; }
+
+    /// <summary>Fatura döviz kuru. Varsayılan (sunucu tarafında): 1.</summary>
+    public decimal InvoiceExchangeRate { get; set; }
     public string? Platform { get; set; }
     public string? DeliveryPerson { get; set; }
     public string? PackageStatus { get; set; }
