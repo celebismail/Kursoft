@@ -18,6 +18,7 @@ Bu repo, **KURSOFT** ERP sistemine entegre olmak isteyen partnerler ve geliştir
 
 - Her endpoint'in alan/tip/zorunluluk açıklamalarını içeren **referans dokümanları** (`docs/`)
 - Uçtan uca test edilebilir, örnek request/response'larla hazır **Postman koleksiyonu** (`postman/`)
+- Tüm endpoint'leri tarayıcıdan denemenizi sağlayan, Swagger UI ile açılan **.NET 8 örnek istemci** (`samples/dotnet-client/`)
 
 sağlar. Amaç, entegrasyon sürecini dokümanı satır satır okuyup deneme-yanılmayla kod yazmak yerine, çalışan örnekler üzerinden hızlandırmaktır.
 
@@ -77,20 +78,22 @@ Her endpoint'in tam alan listesi, enum değerleri ve hata referansı için `docs
 │   ├── CreateOrder_API_Dokumani.docx
 │   ├── OrderList_API_Dokumani.docx
 │   ├── PaymentCreate_API_Dokumani.docx
-│   └── Customerlist_API_Dokumani.docx
+│   ├── Customerlist_API_Dokumani.docx
+│   ├── TransactionHistory_API_Dokumani.docx
+│   └── Product_API_Dokumani.docx
 ├── postman/
 │   ├── ERP_API.postman_collection.json    # Ana koleksiyon (endpoint'ler, örnek response'larla)
 │   └── environments/
 │       └── Test.postman_environment.json  # baseURL / kullanıcı bilgisi şablonu
 └── samples/
-    └── dotnet-client/                     # Çalışan .NET 8 örnek istemci (4 endpoint)
+    └── dotnet-client/                     # Çalışan .NET 8 örnek istemci (11 endpoint)
         ├── README.md                      # Kurulum ve çalıştırma talimatları
         └── KursoftApiClient/
 ```
 
 ## Örnek İstemci (.NET — Swagger UI)
 
-`samples/dotnet-client/` altında, dokümanlardaki sekiz endpoint'i çağıran çalışan bir ASP.NET Core 8 Web API bulunur. `dotnet run` ile başlattığınızda tarayıcıda Swagger UI açılır; her endpoint'i "Try it out" ile tıklayarak canlı test edebilirsiniz — Postman veya konsol çıktısı okumaya gerek kalmadan. Kurulum adımları için `samples/dotnet-client/README.md` dosyasına bakınız.
+`samples/dotnet-client/` altında, dokümanlardaki on bir endpoint'in tamamını çağıran çalışan bir ASP.NET Core 8 Web API bulunur. `dotnet run` ile başlattığınızda tarayıcıda Swagger UI açılır; her endpoint'i "Try it out" ile tıklayarak canlı test edebilirsiniz — Postman veya konsol çıktısı okumaya gerek kalmadan. Kurulum adımları için `samples/dotnet-client/README.md` dosyasına bakınız.
 
 > ⚠️ Bu örnekte de aynı kural geçerlidir: `BaseUrl` / `Username` / `Password` bilgilerinizi asla repo'daki dosyalara yazıp commit etmeyin — `appsettings.Local.json` (git tarafından yoksayılır) ya da ortam değişkenlerini kullanın.
 
