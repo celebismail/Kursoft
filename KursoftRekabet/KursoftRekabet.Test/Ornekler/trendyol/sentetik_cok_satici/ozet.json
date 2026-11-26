@@ -1,0 +1,34 @@
+{
+  "istenenLink": "https://www.trendyol.com/sesmarka/kablosuz-kulaklik-p-123456789?boutiqueId=61&merchantId=9001&utm_source=x",
+  "sonUrl": "https://www.trendyol.com/sesmarka/kablosuz-kulaklik-p-123456789?boutiqueId=61&merchantId=9001&utm_source=x",
+  "httpDurum": 200,
+  "sayfaBasligi": "Kablosuz Kulaklık - Trendyol",
+  "toplanmaZamani": "2026-11-26T12:00:00",
+  "notlar": [
+    "SENTETIK: canli sayfadan alinmadi; eski projedeki veri yapilarina gore elle hazirlandi. Gercek ornek icin --tanila ciktisini bu klasore kopyalayin."
+  ],
+  "globalListesi": [
+    {
+      "Ad": "__envoy__PROPS",
+      "Uzunluk": 78,
+      "UrunVar": true
+    }
+  ],
+  "modulType": "trendyol",
+  "agCevaplari": [
+    {
+      "url": "https://apigw.trendyol.com/discovery-web-productgw-service/api/product-detail/123456789",
+      "durum": 200,
+      "uzunluk": 2247,
+      "urunVar": true,
+      "dosya": "ag/001.json"
+    }
+  ],
+  "globaller": {
+    "__envoy__PROPS": "globaller/001.json"
+  },
+  "scriptler": {},
+  "ldjson": [],
+  "html": "sayfa.html",
+  "ekSayfalar": []
+}

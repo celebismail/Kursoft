@@ -1,0 +1,30 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Kablosuz Kulaklık Bluetooth 5.3",
+  "sku": "123456789",
+  "gtin13": "8690000000011",
+  "brand": {
+    "@type": "Brand",
+    "name": "Sesmarka"
+  },
+  "image": [
+    "https://cdn.dsmcdn.com/ty1001/x.jpg"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": 4.6,
+    "ratingCount": 1520,
+    "reviewCount": 845
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": 1299.9,
+    "priceCurrency": "TRY",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "SesDünyası"
+    }
+  }
+}

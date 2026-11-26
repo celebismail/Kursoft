@@ -1,0 +1,132 @@
+{
+  "product": {
+    "id": 123456789,
+    "contentId": 123456789,
+    "name": "Basic Pamuklu Tişört",
+    "productCode": "KLK-53",
+    "brand": {
+      "id": 55,
+      "name": "Sesmarka"
+    },
+    "category": {
+      "id": 1001,
+      "name": "Kulaklık",
+      "hierarchy": "Elektronik/Telefon Aksesuarları/Kulaklık"
+    },
+    "images": [
+      "/ty1001/product/media/images/prod/QC/20240101/10/aaa/1_org_zoom.jpg",
+      "/ty1001/product/media/images/prod/QC/20240101/10/bbb/2_org_zoom.jpg",
+      "/ty1001/product/media/images/prod/QC/20240101/10/ccc/3_org_zoom.jpg"
+    ],
+    "ratingScore": {
+      "averageRating": 4.6,
+      "totalCount": 1520,
+      "commentCount": 845
+    },
+    "favoriteCount": 12034,
+    "attributes": [
+      {
+        "key": {
+          "name": "Bağlantı"
+        },
+        "value": {
+          "name": "Bluetooth"
+        }
+      },
+      {
+        "key": {
+          "name": "Renk"
+        },
+        "value": {
+          "name": "Siyah"
+        }
+      }
+    ],
+    "contentDescriptions": [
+      {
+        "description": "Bu ürün Sesmarka tarafından gönderilecektir."
+      },
+      {
+        "description": "Kampanya fiyatından satılmak üzere 100 adetten fazla stok sunulmuştur."
+      }
+    ],
+    "merchantListing": {
+      "merchant": {
+        "id": 9001,
+        "name": "SesDünyası",
+        "sellerScore": {
+          "value": 9.4
+        },
+        "cityName": "İstanbul",
+        "url": "/magaza/sesdunyasi-m-9001"
+      },
+      "winnerVariant": {
+        "listingId": "lst-abc-1",
+        "barcode": "8690000000011",
+        "inStock": true,
+        "isFreeCargo": true,
+        "deliveryInformation": {
+          "deliveryDate": "28 Kasım - 30 Kasım"
+        },
+        "price": {
+          "sellingPrice": {
+            "value": 399.99,
+            "text": "399,99 TL"
+          },
+          "originalPrice": {
+            "value": 549.99,
+            "text": "549,99 TL"
+          }
+        }
+      },
+      "otherMerchants": [],
+      "campaigns": [
+        {
+          "name": "2. Ürüne %10 İndirim"
+        }
+      ]
+    },
+    "variants": [
+      {
+        "attributeName": "Beden",
+        "attributeValue": "S",
+        "itemNumber": 111,
+        "barcode": "8690000000101",
+        "inStock": true,
+        "price": {
+          "sellingPrice": {
+            "value": 399.99,
+            "text": "399,99 TL"
+          }
+        }
+      },
+      {
+        "attributeName": "Beden",
+        "attributeValue": "M",
+        "itemNumber": 112,
+        "barcode": "8690000000011",
+        "inStock": true,
+        "selected": true,
+        "price": {
+          "sellingPrice": {
+            "value": 399.99,
+            "text": "399,99 TL"
+          }
+        }
+      },
+      {
+        "attributeName": "Beden",
+        "attributeValue": "L",
+        "itemNumber": 113,
+        "barcode": "8690000000103",
+        "inStock": false,
+        "price": {
+          "sellingPrice": {
+            "value": 419.99,
+            "text": "419,99 TL"
+          }
+        }
+      }
+    ]
+  }
+}

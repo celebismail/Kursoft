@@ -1,0 +1,154 @@
+{
+  "isSuccess": true,
+  "result": {
+    "product": {
+      "id": 123456789,
+      "contentId": 123456789,
+      "name": "Kablosuz Kulaklık Bluetooth 5.3",
+      "productCode": "KLK-53",
+      "brand": {
+        "id": 55,
+        "name": "Sesmarka"
+      },
+      "category": {
+        "id": 1001,
+        "name": "Kulaklık",
+        "hierarchy": "Elektronik/Telefon Aksesuarları/Kulaklık"
+      },
+      "images": [
+        "/ty1001/product/media/images/prod/QC/20240101/10/aaa/1_org_zoom.jpg",
+        "/ty1001/product/media/images/prod/QC/20240101/10/bbb/2_org_zoom.jpg",
+        "/ty1001/product/media/images/prod/QC/20240101/10/ccc/3_org_zoom.jpg"
+      ],
+      "ratingScore": {
+        "averageRating": 4.6,
+        "totalCount": 1520,
+        "commentCount": 845
+      },
+      "favoriteCount": 12034,
+      "attributes": [
+        {
+          "key": {
+            "name": "Bağlantı"
+          },
+          "value": {
+            "name": "Bluetooth"
+          }
+        },
+        {
+          "key": {
+            "name": "Renk"
+          },
+          "value": {
+            "name": "Siyah"
+          }
+        }
+      ],
+      "contentDescriptions": [
+        {
+          "description": "Bu ürün Sesmarka tarafından gönderilecektir."
+        },
+        {
+          "description": "Kampanya fiyatından satılmak üzere 100 adetten fazla stok sunulmuştur."
+        }
+      ],
+      "merchantListing": {
+        "merchant": {
+          "id": 9001,
+          "name": "SesDünyası",
+          "sellerScore": {
+            "value": 9.4
+          },
+          "cityName": "İstanbul",
+          "url": "/magaza/sesdunyasi-m-9001"
+        },
+        "winnerVariant": {
+          "listingId": "lst-abc-1",
+          "barcode": "8690000000011",
+          "inStock": true,
+          "isFreeCargo": true,
+          "deliveryInformation": {
+            "deliveryDate": "28 Kasım - 30 Kasım"
+          },
+          "price": {
+            "sellingPrice": {
+              "value": 1299.9,
+              "text": "1.299,90 TL"
+            },
+            "originalPrice": {
+              "value": 1599.9,
+              "text": "1.599,90 TL"
+            }
+          }
+        },
+        "otherMerchants": [
+          {
+            "id": 9002,
+            "name": "KulaklıkMarket",
+            "sellerScore": {
+              "value": 8.7
+            },
+            "variants": [
+              {
+                "listingId": "lst-9002",
+                "inStock": true,
+                "isFreeCargo": true,
+                "price": {
+                  "sellingPrice": {
+                    "value": 1249.0,
+                    "text": "1.249,00 TL"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": 9003,
+            "name": "TeknoSepet",
+            "sellerScore": {
+              "value": 9.1
+            },
+            "variants": [
+              {
+                "listingId": "lst-9003",
+                "inStock": true,
+                "isFreeCargo": true,
+                "price": {
+                  "sellingPrice": {
+                    "value": 1349.5,
+                    "text": "1.349,50 TL"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": 9004,
+            "name": "SesDünyası",
+            "sellerScore": {
+              "value": 9.4
+            },
+            "variants": [
+              {
+                "listingId": "lst-9004",
+                "inStock": true,
+                "isFreeCargo": true,
+                "price": {
+                  "sellingPrice": {
+                    "value": 1299.9,
+                    "text": "1.299,90 TL"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "campaigns": [
+          {
+            "name": "2. Ürüne %10 İndirim"
+          }
+        ]
+      }
+    }
+  }
+}

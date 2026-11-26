@@ -18,3 +18,9 @@ appsettings.*.Local.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Eski proje (sadece referans, repoya girmez)
+_eski/
+Logs/
+tarayicilar/
+TestResults/

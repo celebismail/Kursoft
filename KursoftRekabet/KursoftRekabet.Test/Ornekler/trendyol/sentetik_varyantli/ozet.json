@@ -1,0 +1,26 @@
+{
+  "istenenLink": "https://www.trendyol.com/moda/basic-tisort-p-555666777",
+  "sonUrl": "https://www.trendyol.com/moda/basic-tisort-p-555666777",
+  "httpDurum": 200,
+  "sayfaBasligi": "Basic Tişört",
+  "toplanmaZamani": "2026-11-26T12:00:00",
+  "notlar": [
+    "SENTETIK: canli sayfadan alinmadi; eski projedeki veri yapilarina gore elle hazirlandi. Gercek ornek icin --tanila ciktisini bu klasore kopyalayin."
+  ],
+  "globalListesi": [
+    {
+      "Ad": "__envoy__PROPS",
+      "Uzunluk": 2123,
+      "UrunVar": true
+    }
+  ],
+  "modulType": "trendyol",
+  "agCevaplari": [],
+  "globaller": {
+    "__envoy__PROPS": "globaller/001.json"
+  },
+  "scriptler": {},
+  "ldjson": [],
+  "html": "sayfa.html",
+  "ekSayfalar": []
+}

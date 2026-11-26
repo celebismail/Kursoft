@@ -1,0 +1,77 @@
+{
+  "productState": {
+    "product": {
+      "name": "Akıllı Saat Pro 2",
+      "sku": "HBCV00000ABCDE",
+      "brand": "Saatçi",
+      "barcode": "8680000000555",
+      "rating": 4.4,
+      "reviewCount": 312,
+      "isInStock": true,
+      "categories": [
+        {
+          "name": "Elektronik",
+          "categoryId": 1
+        },
+        {
+          "name": "Giyilebilir Teknoloji",
+          "categoryId": 2
+        },
+        {
+          "name": "Akıllı Saat",
+          "categoryId": 3
+        }
+      ],
+      "images": [
+        {
+          "link": "https://productimages.hepsiburada.net/s/777/{size}/110000111.jpg"
+        },
+        {
+          "link": "https://productimages.hepsiburada.net/s/777/{size}/110000112.jpg"
+        }
+      ],
+      "properties": [
+        {
+          "key": "Ekran Boyutu",
+          "value": "1.9 inç"
+        },
+        {
+          "key": "Su Geçirmezlik",
+          "value": "IP68"
+        }
+      ],
+      "merchant": {
+        "id": "M1",
+        "name": "SaatDünyası",
+        "lifetimeRating": 9.6
+      },
+      "prices": [
+        {
+          "value": 2499.0,
+          "formattedPrice": "2.499,00 TL",
+          "currency": "TRY"
+        }
+      ],
+      "listings": [
+        {
+          "listingId": "L-M1",
+          "merchantId": "M1",
+          "merchantName": "SaatDünyası",
+          "isFreeShipping": true,
+          "prices": [
+            {
+              "value": 2499.0,
+              "formattedPrice": "2.499,00 TL",
+              "currency": "TRY"
+            }
+          ],
+          "ratingSummary": {
+            "lifetimeRating": 9.6
+          },
+          "deliveryDate": "Yarın kargoda",
+          "isInStock": true
+        }
+      ]
+    }
+  }
+}

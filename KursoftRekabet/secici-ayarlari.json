@@ -1,0 +1,541 @@
+{
+  "_aciklama": [
+    "KursoftRekabet seçici ayarları. Site değişince YENİDEN DERLEMEDEN bu dosyayı güncelleyin (exe yanındaki kopyayı).",
+    "Kaynaklar: verinin okunacağı kökler. Tur: AG_JSON | WINDOW_GLOBAL | SCRIPT_JSON | LD_JSON | HTML | URL",
+    "Alanlar: her alan için adaylar sırayla denenir, ilk değer veren kazanır. Aday: Kaynak + Yol (JSON) ya da Kaynak + Secici/Nitelik (HTML).",
+    "JSON yolu: a.b.c | a[0] | a[-1] | a[*] | a[?alan=deger] | ..derinAra | a['ozel-ad']   ($ = kökün kendisi)",
+    "Listeler: Adaylar listeyi verir; Alanlar her elemana göre (Kaynak boş) okunur.",
+    "Desen: değerden regex ile parça al (1. grup). Birlestir: tüm eşleşmeleri alt alta birleştir.",
+    "DogruDegerler / YanlisDegerler: bool alanlarda metin eşleme. Nitelik 'var' + YoksaDeger 'false': eleman varsa true, yoksa false.",
+    "Bir yol eklerken önce '--tanila <link>' çalıştırıp Logs/Tanilama altındaki ham veriye bakın.",
+    "DOGRULANMADI notu olan yollar canlı sayfada henüz görülmedi; bilinen eski yapılardan alınmış adaylardır."
+  ],
+
+  "trendyol": {
+    "AlanAdlari": [ "trendyol.com" ],
+    "KisaLinkAlanlari": [ "ty.gl" ],
+    "UrunLinkDeseni": "-p-\\d+",
+    "KorunacakParametreler": [ "merchantId", "boutiqueId" ],
+    "UrunAnahtarKelimeleri": [ "merchantListing" ],
+    "HazirSecicileri": [],
+    "PopupKapatSecicileri": [ "#onetrust-accept-btn-handler", "button[data-testid='close-button']", ".modal-close" ],
+    "PuanOlcegi": 10,
+    "VarsayilanParaBirimi": "TRY",
+    "Gorsel": {
+      "OnEk": "https://cdn.dsmcdn.com",
+      "BuyukSablon": "https://cdn.dsmcdn.com/mnresize/1200/1800/{yol}",
+      "KucukSablon": "https://cdn.dsmcdn.com/mnresize/128/192/{yol}"
+    },
+    "EngelIsaretleri": {
+      "HttpDurumlari": [ 403, 429 ],
+      "BaslikIcerir": [ "Just a moment", "Attention Required", "Access denied", "Robot" ],
+      "HtmlIcerir": [ "cf-chl-", "challenge-platform", "captcha", "robot olmadığınızı" ]
+    },
+    "BulunamadiIsaretleri": {
+      "HttpDurumlari": [ 404, 410 ],
+      "BaslikIcerir": [ "Sayfa Bulunamadı", "404" ],
+      "UrlIcerir": [ "/404", "sayfa-bulunamadi" ]
+    },
+    "KaldirilmisIsaretleri": {
+      "_not": "DOGRULANMADI",
+      "HtmlIcerir": [ "Bu ürün satışta değil", "Bu ürün artık satılmamaktadır", "ürün yayından kaldırıldı" ]
+    },
+    "DigerSaticiSayfasi": { "Acik": false },
+
+    "Kaynaklar": [
+      { "Ad": "envoy", "Tur": "WINDOW_GLOBAL", "Global": "__envoy__PROPS", "KokYollari": [ "product", "props.product" ], "KokAnahtarlari": [ "merchantListing", "name" ] },
+      { "Ad": "ag", "Tur": "AG_JSON", "IcerikIcerir": [ "merchantListing" ], "KokYollari": [ "result.product", "product", "result" ], "KokAnahtarlari": [ "merchantListing", "name" ] },
+      { "Ad": "global", "Tur": "WINDOW_GLOBAL", "Global": "*", "KokAnahtarlari": [ "merchantListing", "name" ] },
+      { "Ad": "eskiState", "Tur": "WINDOW_GLOBAL", "Global": "__PRODUCT_DETAIL_APP_INITIAL_STATE__", "KokYollari": [ "product" ] },
+      { "Ad": "ld", "Tur": "LD_JSON", "LdTip": "Product" },
+      { "Ad": "ldBreadcrumb", "Tur": "LD_JSON", "LdTip": "BreadcrumbList" },
+      { "Ad": "html", "Tur": "HTML" },
+      { "Ad": "url", "Tur": "URL" }
+    ],
+
+    "Alanlar": {
+      "LinktenUrunID": [ { "Kaynak": "url", "Desen": "-p-(\\d+)" } ],
+      "PlatformUrunID": [
+        { "Kaynak": "envoy", "Yol": "id" }, { "Kaynak": "ag", "Yol": "id" }, { "Kaynak": "global", "Yol": "id" },
+        { "Kaynak": "eskiState", "Yol": "id" }
+      ],
+      "ContentID": [ { "Kaynak": "envoy", "Yol": "contentId" }, { "Kaynak": "ag", "Yol": "contentId" }, { "Kaynak": "global", "Yol": "contentId" } ],
+      "ListingID": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.listingId" }, { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.listingId" },
+        { "Kaynak": "global", "Yol": "merchantListing.winnerVariant.listingId" }
+      ],
+      "Barkod": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.barcode" }, { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.barcode" },
+        { "Kaynak": "global", "Yol": "merchantListing.winnerVariant.barcode" }, { "Kaynak": "eskiState", "Yol": "variants[0].barcode" },
+        { "Kaynak": "ld", "Yol": "gtin13" }
+      ],
+      "GTIN": [ { "Kaynak": "ld", "Yol": "gtin13" }, { "Kaynak": "ld", "Yol": "gtin" } ],
+      "ModelKodu": [ { "Kaynak": "envoy", "Yol": "productCode" }, { "Kaynak": "eskiState", "Yol": "productCode" }, { "Kaynak": "ld", "Yol": "sku" } ],
+      "MerchantSku": [ { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.merchantSku" }, { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.merchantSku" } ],
+
+      "UrunAdi": [
+        { "Kaynak": "envoy", "Yol": "name" }, { "Kaynak": "ag", "Yol": "name" }, { "Kaynak": "global", "Yol": "name" },
+        { "Kaynak": "eskiState", "Yol": "name" }, { "Kaynak": "ld", "Yol": "name" },
+        { "Kaynak": "html", "Secici": "h1[data-testid='product-title']" }, { "Kaynak": "html", "Secici": "h1.pr-new-br" },
+        { "Kaynak": "html", "Secici": "meta[property='og:title']", "Nitelik": "content" }
+      ],
+      "Marka": [
+        { "Kaynak": "envoy", "Yol": "brand.name" }, { "Kaynak": "ag", "Yol": "brand.name" }, { "Kaynak": "global", "Yol": "brand.name" },
+        { "Kaynak": "eskiState", "Yol": "brand.name" }, { "Kaynak": "ld", "Yol": "brand.name" }, { "Kaynak": "ld", "Yol": "brand" }
+      ],
+      "KategoriID": [ { "Kaynak": "envoy", "Yol": "category.id" }, { "Kaynak": "ag", "Yol": "category.id" }, { "Kaynak": "eskiState", "Yol": "category.id" } ],
+      "KategoriHiyerarsi": [ { "Kaynak": "envoy", "Yol": "category.hierarchy" }, { "Kaynak": "ag", "Yol": "category.hierarchy" }, { "Kaynak": "eskiState", "Yol": "category.hierarchy" } ],
+      "Aciklama": [
+        { "Kaynak": "envoy", "Yol": "contentDescriptions[*].description", "Birlestir": true },
+        { "Kaynak": "ag", "Yol": "contentDescriptions[*].description", "Birlestir": true },
+        { "Kaynak": "eskiState", "Yol": "contentDescriptions[*].description", "Birlestir": true },
+        { "Kaynak": "ld", "Yol": "description" }
+      ],
+      "VideoUrl": [ { "Kaynak": "envoy", "Yol": "videoUrl" }, { "Kaynak": "envoy", "Yol": "media.video.url" } ],
+
+      "UrunPuani": [
+        { "Kaynak": "envoy", "Yol": "ratingScore.averageRating" }, { "Kaynak": "ag", "Yol": "ratingScore.averageRating" },
+        { "Kaynak": "eskiState", "Yol": "ratingScore.averageRating" }, { "Kaynak": "ld", "Yol": "aggregateRating.ratingValue" }
+      ],
+      "DegerlendirmeSayisi": [
+        { "Kaynak": "envoy", "Yol": "ratingScore.totalCount" }, { "Kaynak": "envoy", "Yol": "ratingScore.totalRatingCount" },
+        { "Kaynak": "eskiState", "Yol": "ratingScore.totalRatingCount" }, { "Kaynak": "ld", "Yol": "aggregateRating.ratingCount" }
+      ],
+      "YorumSayisi": [
+        { "Kaynak": "envoy", "Yol": "ratingScore.commentCount" }, { "Kaynak": "envoy", "Yol": "ratingScore.totalCommentCount" },
+        { "Kaynak": "eskiState", "Yol": "ratingScore.totalCommentCount" }, { "Kaynak": "ld", "Yol": "aggregateRating.reviewCount" }
+      ],
+      "SoruSayisi": [ { "Kaynak": "envoy", "Yol": "questionCount" }, { "Kaynak": "envoy", "Yol": "questions.totalCount" } ],
+      "FavoriSayisi": [ { "Kaynak": "envoy", "Yol": "favoriteCount" }, { "Kaynak": "ag", "Yol": "favoriteCount" }, { "Kaynak": "eskiState", "Yol": "favoriteCount" } ],
+      "SatisAdediMetni": [ { "Kaynak": "envoy", "Yol": "socialProof[?key=orderCount].text" }, { "Kaynak": "envoy", "Yol": "socialProofs[0].text" } ],
+
+      "SatisFiyati": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.discountedPrice.value" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.sellingPrice.value" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.discountedPrice.text" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.sellingPrice.text" },
+        { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.price.discountedPrice.value" },
+        { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.price.sellingPrice.value" },
+        { "Kaynak": "global", "Yol": "merchantListing.winnerVariant.price.sellingPrice.value" },
+        { "Kaynak": "eskiState", "Yol": "price.discountedPrice.value" }, { "Kaynak": "eskiState", "Yol": "price.sellingPrice.value" },
+        { "Kaynak": "ld", "Yol": "offers.price" }, { "Kaynak": "ld", "Yol": "offers[0].price" }, { "Kaynak": "ld", "Yol": "offers.lowPrice" }
+      ],
+      "FiyatMetni": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.discountedPrice.text" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.sellingPrice.text" },
+        { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.price.discountedPrice.text" },
+        { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.price.sellingPrice.text" },
+        { "Kaynak": "global", "Yol": "merchantListing.winnerVariant.price.sellingPrice.text" },
+        { "Kaynak": "eskiState", "Yol": "price.discountedPrice.text" }, { "Kaynak": "eskiState", "Yol": "price.sellingPrice.text" }
+      ],
+      "ListeFiyati": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.originalPrice.value" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.originalPrice.text" },
+        { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.price.originalPrice.value" },
+        { "Kaynak": "eskiState", "Yol": "price.originalPrice.value" }
+      ],
+      "SepetteFiyat": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.basketPrice.value" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.discountedPrice.value" },
+        { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.price.basketPrice.value" }
+      ],
+      "IndirimOrani": [ { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.discountPercentage" } ],
+      "ParaBirimi": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.currency" }, { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.price.sellingPrice.currency" },
+        { "Kaynak": "ld", "Yol": "offers.priceCurrency" }, { "Kaynak": "ld", "Yol": "offers[0].priceCurrency" }
+      ],
+      "KuponMetni": [ { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.coupon.text" }, { "Kaynak": "envoy", "Yol": "merchantListing.coupons[0].title" } ],
+      "TaksitBilgisi": [ { "Kaynak": "envoy", "Yol": "merchantListing.installment.text" }, { "Kaynak": "envoy", "Yol": "installmentText" } ],
+
+      "KargoUcreti": [ { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.shippingPrice.value" }, { "Kaynak": "envoy", "Yol": "merchantListing.cargo.price" } ],
+      "KargoBedavaMi": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.isFreeCargo" }, { "Kaynak": "envoy", "Yol": "merchantListing.freeCargo" },
+        { "Kaynak": "envoy", "Yol": "isFreeCargo" }, { "Kaynak": "eskiState", "Yol": "isFreeCargo" }
+      ],
+      "TahminiTeslimat": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.deliveryInformation.deliveryDate" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.deliveryInformation.deliveryDate" },
+        { "Kaynak": "envoy", "Yol": "deliveryInformation.deliveryDate" }, { "Kaynak": "eskiState", "Yol": "deliveryInformation.deliveryDate" }
+      ],
+      "HizliTeslimatMi": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.deliveryInformation.isFastDelivery" },
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.isRushDelivery" }, { "Kaynak": "envoy", "Yol": "isRushDelivery" }
+      ],
+      "StokVar": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.inStock" }, { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.hasStock" },
+        { "Kaynak": "envoy", "Yol": "hasStock" }, { "Kaynak": "ag", "Yol": "merchantListing.winnerVariant.inStock" },
+        { "Kaynak": "eskiState", "Yol": "hasStock" },
+        { "Kaynak": "ld", "Yol": "offers.availability", "DogruDegerler": [ "InStock", "LimitedAvailability" ] }
+      ],
+      "TukendiMi": [
+        { "Kaynak": "html", "Secici": "button.sold-out, button.add-to-basket.sold-out, [data-testid='sold-out-button']", "Nitelik": "var" }
+      ],
+      "StokAdedi": [ { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.stock" }, { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.quantity" } ],
+      "MaksimumSatisAdedi": [ { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.maxSaleQuantity" }, { "Kaynak": "envoy", "Yol": "merchantListing.maxSaleQuantity" } ],
+
+      "SaticiID": [ { "Kaynak": "envoy", "Yol": "merchantListing.merchant.id" }, { "Kaynak": "ag", "Yol": "merchantListing.merchant.id" }, { "Kaynak": "global", "Yol": "merchantListing.merchant.id" }, { "Kaynak": "eskiState", "Yol": "merchant.id" } ],
+      "SaticiAdi": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.merchant.name" }, { "Kaynak": "ag", "Yol": "merchantListing.merchant.name" },
+        { "Kaynak": "global", "Yol": "merchantListing.merchant.name" }, { "Kaynak": "eskiState", "Yol": "merchant.name" },
+        { "Kaynak": "ld", "Yol": "offers.seller.name" }, { "Kaynak": "ld", "Yol": "offers[0].seller.name" }
+      ],
+      "SaticiPuani": [
+        { "Kaynak": "envoy", "Yol": "merchantListing.merchant.sellerScore.value" }, { "Kaynak": "envoy", "Yol": "merchantListing.merchant.sellerScore" },
+        { "Kaynak": "ag", "Yol": "merchantListing.merchant.sellerScore.value" }, { "Kaynak": "global", "Yol": "merchantListing.merchant.sellerScore.value" },
+        { "Kaynak": "eskiState", "Yol": "merchant.sellerScore" }
+      ],
+      "ResmiMagazaMi": [ { "Kaynak": "envoy", "Yol": "merchantListing.merchant.isOfficial" }, { "Kaynak": "envoy", "Yol": "merchantListing.merchant.officialStore" } ],
+      "SaticiSehri": [ { "Kaynak": "envoy", "Yol": "merchantListing.merchant.cityName" }, { "Kaynak": "eskiState", "Yol": "merchant.cityName" } ],
+      "SaticiLinki": [ { "Kaynak": "envoy", "Yol": "merchantListing.merchant.url" }, { "Kaynak": "envoy", "Yol": "merchantListing.merchant.sellerLink" } ],
+      "TakipciSayisi": [ { "Kaynak": "envoy", "Yol": "merchantListing.merchant.followerCount" } ],
+      "ToplamSaticiSayisi": []
+    },
+
+    "Listeler": {
+      "Gorseller": {
+        "Adaylar": [ { "Kaynak": "envoy", "Yol": "images" }, { "Kaynak": "ag", "Yol": "images" }, { "Kaynak": "eskiState", "Yol": "images" }, { "Kaynak": "ld", "Yol": "image" } ],
+        "Alanlar": { "Url": [ { "Yol": "$" }, { "Yol": "url" }, { "Yol": "contentUrl" } ] }
+      },
+      "KategoriYolu": {
+        "Adaylar": [ { "Kaynak": "envoy", "Yol": "breadcrumbs" }, { "Kaynak": "ldBreadcrumb", "Yol": "itemListElement" } ],
+        "Alanlar": { "Ad": [ { "Yol": "name" }, { "Yol": "item.name" } ] }
+      },
+      "Ozellikler": {
+        "Adaylar": [ { "Kaynak": "envoy", "Yol": "attributes" }, { "Kaynak": "ag", "Yol": "attributes" }, { "Kaynak": "eskiState", "Yol": "attributes" } ],
+        "Alanlar": { "Anahtar": [ { "Yol": "key.name" }, { "Yol": "key" }, { "Yol": "name" } ], "Deger": [ { "Yol": "value.name" }, { "Yol": "value" } ] }
+      },
+      "Varyantlar": {
+        "Adaylar": [ { "Kaynak": "envoy", "Yol": "variants" }, { "Kaynak": "envoy", "Yol": "allVariants" }, { "Kaynak": "eskiState", "Yol": "allVariants" }, { "Kaynak": "eskiState", "Yol": "variants" } ],
+        "Alanlar": {
+          "Ozellik": [ { "Yol": "attributeName" }, { "Yol": "name" } ],
+          "Deger": [ { "Yol": "attributeValue" }, { "Yol": "value" } ],
+          "VaryantID": [ { "Yol": "itemNumber" }, { "Yol": "id" } ],
+          "Barkod": [ { "Yol": "barcode" } ],
+          "Fiyat": [ { "Yol": "price.discountedPrice.value" }, { "Yol": "price.sellingPrice.value" }, { "Yol": "price.value" }, { "Yol": "price" } ],
+          "StokVar": [ { "Yol": "inStock" }, { "Yol": "hasStock" }, { "Yol": "sellable" } ],
+          "SeciliMi": [ { "Yol": "selected" }, { "Yol": "isSelected" } ],
+          "Link": [ { "Yol": "url" } ]
+        }
+      },
+      "Kampanyalar": {
+        "Adaylar": [ { "Kaynak": "envoy", "Yol": "merchantListing.campaigns" }, { "Kaynak": "envoy", "Yol": "merchantListing.winnerVariant.promotions" }, { "Kaynak": "eskiState", "Yol": "campaign" } ],
+        "Alanlar": { "Metin": [ { "Yol": "name" }, { "Yol": "text" }, { "Yol": "title" }, { "Yol": "$" } ] }
+      },
+      "DigerSaticilar": {
+        "Adaylar": [
+          { "Kaynak": "envoy", "Yol": "merchantListing.otherMerchants" }, { "Kaynak": "ag", "Yol": "merchantListing.otherMerchants" },
+          { "Kaynak": "global", "Yol": "merchantListing.otherMerchants" }, { "Kaynak": "eskiState", "Yol": "otherMerchants" }
+        ],
+        "Alanlar": {
+          "SaticiID": [ { "Yol": "id" }, { "Yol": "merchant.id" } ],
+          "SaticiAdi": [ { "Yol": "name" }, { "Yol": "merchant.name" } ],
+          "SaticiPuani": [ { "Yol": "sellerScore.value" }, { "Yol": "sellerScore" }, { "Yol": "merchant.sellerScore" } ],
+          "ResmiMagazaMi": [ { "Yol": "isOfficial" } ],
+          "SaticiSehri": [ { "Yol": "cityName" } ],
+          "SaticiLinki": [ { "Yol": "url" } ],
+          "ListingID": [ { "Yol": "variants[0].listingId" }, { "Yol": "listingId" } ],
+          "SatisFiyati": [ { "Yol": "variants[0].price.discountedPrice.value" }, { "Yol": "variants[0].price.sellingPrice.value" }, { "Yol": "variants[0].price.sellingPrice.text" }, { "Yol": "price.sellingPrice.value" } ],
+          "FiyatMetni": [ { "Yol": "variants[0].price.discountedPrice.text" }, { "Yol": "variants[0].price.sellingPrice.text" }, { "Yol": "price.sellingPrice.text" } ],
+          "ListeFiyati": [ { "Yol": "variants[0].price.originalPrice.value" }, { "Yol": "price.originalPrice.value" } ],
+          "KargoBedavaMi": [ { "Yol": "variants[0].isFreeCargo" }, { "Yol": "isFreeCargo" } ],
+          "TahminiTeslimat": [ { "Yol": "variants[0].deliveryInformation.deliveryDate" }, { "Yol": "deliveryInformation.deliveryDate" } ],
+          "StokVar": [ { "Yol": "variants[0].inStock" }, { "Yol": "inStock" } ]
+        }
+      }
+    }
+  },
+
+  "hepsiburada": {
+    "AlanAdlari": [ "hepsiburada.com" ],
+    "KisaLinkAlanlari": [ "hb.gl" ],
+    "UrunLinkDeseni": "-p(m)?-[A-Za-z0-9]+",
+    "KorunacakParametreler": [ "magaza" ],
+    "UrunAnahtarKelimeleri": [ "merchantName", "productState" ],
+    "HazirSecicileri": [ "script#reduxStore" ],
+    "PopupKapatSecicileri": [ "#onetrust-accept-btn-handler", "button[data-test-id='close-button']" ],
+    "PuanOlcegi": 10,
+    "VarsayilanParaBirimi": "TRY",
+    "Gorsel": { "YerTutucu": "{size}", "NormalBoyut": "1500", "BuyukBoyut": "1500", "KucukBoyut": "200" },
+    "EngelIsaretleri": {
+      "HttpDurumlari": [ 403, 429 ],
+      "BaslikIcerir": [ "Güvenlik", "Just a moment", "Attention Required", "Access Denied" ],
+      "HtmlIcerir": [ "captcha", "_Incapsula_", "px-captcha", "robot olmadığınızı" ]
+    },
+    "BulunamadiIsaretleri": { "HttpDurumlari": [ 404, 410 ], "BaslikIcerir": [ "Sayfa bulunamadı", "404" ], "UrlIcerir": [ "/404", "sayfa-bulunamadi" ] },
+    "KaldirilmisIsaretleri": { "_not": "DOGRULANMADI", "HtmlIcerir": [ "Bu ürün şu anda satışta değil", "Ürün satışta değil", "yayından kaldırılmıştır" ] },
+    "DigerSaticiSayfasi": { "Acik": false },
+
+    "Kaynaklar": [
+      { "Ad": "redux", "Tur": "SCRIPT_JSON", "Secici": "script#reduxStore", "KokYollari": [ "productState.product" ] },
+      { "Ad": "reduxKok", "Tur": "SCRIPT_JSON", "Secici": "script#reduxStore", "KokYollari": [ "productState" ] },
+      { "Ad": "ag", "Tur": "AG_JSON", "IcerikIcerir": [ "merchantName" ], "KokAnahtarlari": [ "listings", "name" ] },
+      { "Ad": "next", "Tur": "SCRIPT_JSON", "Secici": "script#__NEXT_DATA__", "KokAnahtarlari": [ "listings", "name" ] },
+      { "Ad": "ld", "Tur": "LD_JSON", "LdTip": "Product" },
+      { "Ad": "ldBreadcrumb", "Tur": "LD_JSON", "LdTip": "BreadcrumbList" },
+      { "Ad": "html", "Tur": "HTML" },
+      { "Ad": "url", "Tur": "URL" }
+    ],
+
+    "Alanlar": {
+      "LinktenUrunID": [ { "Kaynak": "url", "Desen": "-pm?-([A-Za-z0-9]+)" } ],
+      "PlatformUrunID": [ { "Kaynak": "redux", "Yol": "sku" }, { "Kaynak": "redux", "Yol": "productId" }, { "Kaynak": "ag", "Yol": "sku" }, { "Kaynak": "ld", "Yol": "sku" } ],
+      "ListingID": [ { "Kaynak": "redux", "Yol": "listings[0].listingId" }, { "Kaynak": "redux", "Yol": "listing.listingId" } ],
+      "MerchantSku": [ { "Kaynak": "redux", "Yol": "listings[0].merchantSku" } ],
+      "Barkod": [ { "Kaynak": "redux", "Yol": "barcode" }, { "Kaynak": "redux", "Yol": "properties[?key=barcode].value" }, { "Kaynak": "ld", "Yol": "gtin13" } ],
+      "GTIN": [ { "Kaynak": "ld", "Yol": "gtin13" }, { "Kaynak": "ld", "Yol": "gtin" } ],
+      "ModelKodu": [ { "Kaynak": "redux", "Yol": "definitionName" }, { "Kaynak": "ld", "Yol": "mpn" } ],
+
+      "UrunAdi": [
+        { "Kaynak": "redux", "Yol": "name" }, { "Kaynak": "ag", "Yol": "name" }, { "Kaynak": "next", "Yol": "name" }, { "Kaynak": "ld", "Yol": "name" },
+        { "Kaynak": "html", "Secici": "h1[data-test-id='title']" }, { "Kaynak": "html", "Secici": "h1#product-name" },
+        { "Kaynak": "html", "Secici": "meta[property='og:title']", "Nitelik": "content" }
+      ],
+      "Marka": [ { "Kaynak": "redux", "Yol": "brand" }, { "Kaynak": "redux", "Yol": "brand.name" }, { "Kaynak": "ld", "Yol": "brand.name" }, { "Kaynak": "ld", "Yol": "brand" } ],
+      "KategoriID": [ { "Kaynak": "redux", "Yol": "categoryId" }, { "Kaynak": "redux", "Yol": "categories[-1].categoryId" } ],
+      "Aciklama": [ { "Kaynak": "redux", "Yol": "description" }, { "Kaynak": "ld", "Yol": "description" }, { "Kaynak": "html", "Secici": "#productDescriptionContent", "Nitelik": "html" } ],
+
+      "UrunPuani": [ { "Kaynak": "redux", "Yol": "rating" }, { "Kaynak": "redux", "Yol": "ratingSummary.averageRating" }, { "Kaynak": "ld", "Yol": "aggregateRating.ratingValue" } ],
+      "DegerlendirmeSayisi": [ { "Kaynak": "redux", "Yol": "reviewCount" }, { "Kaynak": "redux", "Yol": "ratingSummary.totalCount" }, { "Kaynak": "ld", "Yol": "aggregateRating.ratingCount" } ],
+      "YorumSayisi": [ { "Kaynak": "redux", "Yol": "commentCount" }, { "Kaynak": "ld", "Yol": "aggregateRating.reviewCount" } ],
+      "SoruSayisi": [ { "Kaynak": "redux", "Yol": "questionCount" } ],
+      "FavoriSayisi": [ { "Kaynak": "redux", "Yol": "favoriteCount" } ],
+      "SatisAdediMetni": [ { "Kaynak": "redux", "Yol": "socialProof.text" } ],
+
+      "SatisFiyati": [
+        { "Kaynak": "redux", "Yol": "listings[0].prices[0].value" }, { "Kaynak": "redux", "Yol": "prices[0].value" },
+        { "Kaynak": "redux", "Yol": "listings[0].prices[0].formattedPrice" }, { "Kaynak": "redux", "Yol": "prices[0].formattedPrice" },
+        { "Kaynak": "ag", "Yol": "listings[0].prices[0].value" },
+        { "Kaynak": "ld", "Yol": "offers.price" }, { "Kaynak": "ld", "Yol": "offers[0].price" }, { "Kaynak": "ld", "Yol": "offers.lowPrice" },
+        { "Kaynak": "html", "Secici": "[data-test-id='price-current-price']" }, { "Kaynak": "html", "Secici": "[data-test-id='default-price']" }
+      ],
+      "FiyatMetni": [ { "Kaynak": "redux", "Yol": "listings[0].prices[0].formattedPrice" }, { "Kaynak": "redux", "Yol": "prices[0].formattedPrice" }, { "Kaynak": "html", "Secici": "[data-test-id='price-current-price']" } ],
+      "ListeFiyati": [
+        { "Kaynak": "redux", "Yol": "listings[0].prices[?type=original].value" }, { "Kaynak": "redux", "Yol": "listings[0].originalPrice.value" },
+        { "Kaynak": "redux", "Yol": "originalPrice.value" }, { "Kaynak": "html", "Secici": "[data-test-id='prev-price']" }
+      ],
+      "SepetteFiyat": [ { "Kaynak": "redux", "Yol": "listings[0].checkoutPrice.value" }, { "Kaynak": "html", "Secici": "[data-test-id='checkout-price']" } ],
+      "IndirimOrani": [ { "Kaynak": "redux", "Yol": "listings[0].discountRate" } ],
+      "ParaBirimi": [ { "Kaynak": "redux", "Yol": "listings[0].prices[0].currency" }, { "Kaynak": "redux", "Yol": "prices[0].currency" }, { "Kaynak": "ld", "Yol": "offers.priceCurrency" }, { "Kaynak": "ld", "Yol": "offers[0].priceCurrency" } ],
+      "KuponMetni": [ { "Kaynak": "redux", "Yol": "listings[0].coupon.text" }, { "Kaynak": "html", "Secici": "[data-test-id='coupon-text']" } ],
+      "TaksitBilgisi": [ { "Kaynak": "redux", "Yol": "listings[0].installmentText" }, { "Kaynak": "html", "Secici": "[data-test-id='installment-info']" } ],
+
+      "KargoUcreti": [ { "Kaynak": "redux", "Yol": "listings[0].shippingPrice.value" }, { "Kaynak": "redux", "Yol": "listings[0].shippingFee" } ],
+      "KargoBedavaMi": [ { "Kaynak": "redux", "Yol": "listings[0].isFreeShipping" }, { "Kaynak": "redux", "Yol": "listings[0].freeShipping" } ],
+      "TahminiTeslimat": [ { "Kaynak": "redux", "Yol": "listings[0].deliveryDate" }, { "Kaynak": "redux", "Yol": "listings[0].shippingInfo.text" }, { "Kaynak": "html", "Secici": "[data-test-id='delivery-info']" } ],
+      "HizliTeslimatMi": [ { "Kaynak": "redux", "Yol": "listings[0].isFastShipping" }, { "Kaynak": "redux", "Yol": "listings[0].sameDayShipping" } ],
+      "StokVar": [
+        { "Kaynak": "redux", "Yol": "isInStock" }, { "Kaynak": "redux", "Yol": "listings[0].isInStock" },
+        { "Kaynak": "ld", "Yol": "offers.availability", "DogruDegerler": [ "InStock", "LimitedAvailability" ] }
+      ],
+      "TukendiMi": [ { "Kaynak": "redux", "Yol": "isOutOfStock" }, { "Kaynak": "html", "Secici": "[data-test-id='out-of-stock']", "Nitelik": "var" } ],
+      "StokAdedi": [ { "Kaynak": "redux", "Yol": "listings[0].quantity" } ],
+      "MaksimumSatisAdedi": [ { "Kaynak": "redux", "Yol": "listings[0].maximumPurchasableQuantity" }, { "Kaynak": "redux", "Yol": "listings[0].maxQuantity" } ],
+
+      "SaticiID": [ { "Kaynak": "redux", "Yol": "merchant.id" }, { "Kaynak": "redux", "Yol": "listings[0].merchantId" } ],
+      "SaticiAdi": [
+        { "Kaynak": "redux", "Yol": "merchant.name" }, { "Kaynak": "redux", "Yol": "listings[0].merchantName" }, { "Kaynak": "ag", "Yol": "listings[0].merchantName" },
+        { "Kaynak": "ld", "Yol": "offers.seller.name" }, { "Kaynak": "ld", "Yol": "offers[0].seller.name" }, { "Kaynak": "html", "Secici": "[data-test-id='merchant-name']" }
+      ],
+      "SaticiPuani": [
+        { "Kaynak": "redux", "Yol": "merchant.lifetimeRating" }, { "Kaynak": "redux", "Yol": "listings[0].ratingSummary.lifetimeRating" },
+        { "Kaynak": "redux", "Yol": "listings[0].merchantRating" }, { "Kaynak": "html", "Secici": "[data-test-id='merchant-rating']" }
+      ],
+      "ResmiMagazaMi": [ { "Kaynak": "redux", "Yol": "merchant.isOfficial" }, { "Kaynak": "redux", "Yol": "listings[0].isOfficialMerchant" } ],
+      "SaticiSehri": [ { "Kaynak": "redux", "Yol": "merchant.city" }, { "Kaynak": "redux", "Yol": "listings[0].merchantCity" } ],
+      "SaticiLinki": [ { "Kaynak": "redux", "Yol": "merchant.url" }, { "Kaynak": "redux", "Yol": "listings[0].merchantUrl" } ],
+      "ToplamSaticiSayisi": [ { "Kaynak": "redux", "Yol": "totalListingCount" } ]
+    },
+
+    "Listeler": {
+      "Gorseller": {
+        "Adaylar": [ { "Kaynak": "redux", "Yol": "media" }, { "Kaynak": "redux", "Yol": "images" }, { "Kaynak": "ld", "Yol": "image" } ],
+        "Alanlar": { "Url": [ { "Yol": "linkFormat" }, { "Yol": "link" }, { "Yol": "url" }, { "Yol": "$" } ] }
+      },
+      "KategoriYolu": {
+        "Adaylar": [ { "Kaynak": "redux", "Yol": "categories" }, { "Kaynak": "reduxKok", "Yol": "breadcrumbs" }, { "Kaynak": "ldBreadcrumb", "Yol": "itemListElement" } ],
+        "Alanlar": { "Ad": [ { "Yol": "name" }, { "Yol": "title" }, { "Yol": "item.name" } ] }
+      },
+      "Ozellikler": {
+        "Adaylar": [ { "Kaynak": "redux", "Yol": "properties" }, { "Kaynak": "redux", "Yol": "productSpecifications" } ],
+        "Alanlar": { "Anahtar": [ { "Yol": "key" }, { "Yol": "name" } ], "Deger": [ { "Yol": "value" }, { "Yol": "values[0]" } ] }
+      },
+      "Varyantlar": {
+        "Adaylar": [ { "Kaynak": "redux", "Yol": "variantList" }, { "Kaynak": "redux", "Yol": "variants" } ],
+        "Alanlar": {
+          "Ozellik": [ { "Yol": "properties[0].name" }, { "Yol": "variantName" }, { "Yol": "name" } ],
+          "Deger": [ { "Yol": "properties[0].value" }, { "Yol": "variantValue" }, { "Yol": "value" } ],
+          "VaryantID": [ { "Yol": "sku" }, { "Yol": "variantId" } ],
+          "Barkod": [ { "Yol": "barcode" } ],
+          "Fiyat": [ { "Yol": "listing.prices[0].value" }, { "Yol": "prices[0].value" }, { "Yol": "price" } ],
+          "StokVar": [ { "Yol": "isInStock" }, { "Yol": "inStock" } ],
+          "SeciliMi": [ { "Yol": "isSelected" }, { "Yol": "selected" } ],
+          "Link": [ { "Yol": "url" }, { "Yol": "link" } ]
+        }
+      },
+      "Kampanyalar": {
+        "Adaylar": [ { "Kaynak": "redux", "Yol": "listings[0].campaigns" }, { "Kaynak": "redux", "Yol": "campaigns" } ],
+        "Alanlar": { "Metin": [ { "Yol": "name" }, { "Yol": "title" }, { "Yol": "text" }, { "Yol": "$" } ] }
+      },
+      "DigerSaticilar": {
+        "Adaylar": [ { "Kaynak": "redux", "Yol": "listings" }, { "Kaynak": "ag", "Yol": "listings" }, { "Kaynak": "next", "Yol": "listings" } ],
+        "Alanlar": {
+          "SaticiID": [ { "Yol": "merchantId" } ],
+          "SaticiAdi": [ { "Yol": "merchantName" } ],
+          "SaticiPuani": [ { "Yol": "ratingSummary.lifetimeRating" }, { "Yol": "merchantRating" } ],
+          "ResmiMagazaMi": [ { "Yol": "isOfficialMerchant" } ],
+          "SaticiSehri": [ { "Yol": "merchantCity" } ],
+          "SaticiLinki": [ { "Yol": "merchantUrl" } ],
+          "ListingID": [ { "Yol": "listingId" } ],
+          "SatisFiyati": [ { "Yol": "prices[0].value" }, { "Yol": "prices[0].formattedPrice" }, { "Yol": "price.value" } ],
+          "FiyatMetni": [ { "Yol": "prices[0].formattedPrice" } ],
+          "ListeFiyati": [ { "Yol": "originalPrice.value" } ],
+          "KargoUcreti": [ { "Yol": "shippingPrice.value" } ],
+          "KargoBedavaMi": [ { "Yol": "isFreeShipping" }, { "Yol": "freeShipping" } ],
+          "TahminiTeslimat": [ { "Yol": "deliveryDate" }, { "Yol": "shippingInfo.text" } ],
+          "StokVar": [ { "Yol": "isInStock" } ]
+        }
+      }
+    }
+  },
+
+  "n11": {
+    "AlanAdlari": [ "n11.com" ],
+    "KisaLinkAlanlari": [],
+    "UrunLinkDeseni": "/urun/",
+    "KorunacakParametreler": [ "magaza" ],
+    "UrunAnahtarKelimeleri": [ "sellerNickName", "productId" ],
+    "HazirSecicileri": [ "h1.proName", "div.unf-p-cvr", "script[type='application/ld+json']" ],
+    "PopupKapatSecicileri": [ "#onetrust-accept-btn-handler", ".dn-slide-deny-btn", "span.closeBtn" ],
+    "PuanOlcegi": 100,
+    "VarsayilanParaBirimi": "TRY",
+    "Gorsel": {},
+    "EngelIsaretleri": {
+      "HttpDurumlari": [ 403, 429 ],
+      "BaslikIcerir": [ "Attention Required", "Just a moment", "Access denied" ],
+      "HtmlIcerir": [ "cf-chl-", "challenge-platform", "captcha" ]
+    },
+    "BulunamadiIsaretleri": { "HttpDurumlari": [ 404, 410 ], "BaslikIcerir": [ "Sayfa Bulunamadı", "404" ], "UrlIcerir": [ "/404", "hata" ] },
+    "KaldirilmisIsaretleri": { "_not": "DOGRULANMADI", "HtmlIcerir": [ "Bu ürün satışta değildir", "ürün satışta değil", "yayından kaldırılmıştır" ] },
+    "DigerSaticiSayfasi": {
+      "Acik": true,
+      "TiklanacakSecici": "div.unf-p-other-seller div.title > span",
+      "BeklenecekSecici": "div.unf-sell.unf-section",
+      "SonrakiSecici": "div.unf-sell.unf-section a.next.navigation",
+      "PasifSinifIcerir": "disable",
+      "MaksimumSayfa": 20,
+      "SayfaBeklemeMs": 1500
+    },
+
+    "Kaynaklar": [
+      { "Ad": "ag", "Tur": "AG_JSON", "IcerikIcerir": [ "sellerNickName" ], "KokAnahtarlari": [ "productId", "title" ] },
+      { "Ad": "next", "Tur": "SCRIPT_JSON", "Secici": "script#__NEXT_DATA__", "KokYollari": [ "props.pageProps.product", "props.pageProps.productDetail" ] },
+      { "Ad": "ld", "Tur": "LD_JSON", "LdTip": "Product" },
+      { "Ad": "ldBreadcrumb", "Tur": "LD_JSON", "LdTip": "BreadcrumbList" },
+      { "Ad": "html", "Tur": "HTML" },
+      { "Ad": "htmlEk", "Tur": "HTML", "EkSayfalar": true },
+      { "Ad": "url", "Tur": "URL" }
+    ],
+
+    "Alanlar": {
+      "LinktenUrunID": [ { "Kaynak": "url", "Desen": "-(\\d+)(?:\\?|$)" } ],
+      "PlatformUrunID": [ { "Kaynak": "next", "Yol": "id" }, { "Kaynak": "ag", "Yol": "productId" }, { "Kaynak": "ld", "Yol": "sku" }, { "Kaynak": "html", "Secici": "input#productId", "Nitelik": "value" } ],
+      "Barkod": [ { "Kaynak": "ld", "Yol": "gtin13" } ],
+      "GTIN": [ { "Kaynak": "ld", "Yol": "gtin13" }, { "Kaynak": "ld", "Yol": "gtin" } ],
+      "ModelKodu": [ { "Kaynak": "ld", "Yol": "mpn" } ],
+
+      "UrunAdi": [
+        { "Kaynak": "next", "Yol": "title" }, { "Kaynak": "next", "Yol": "name" }, { "Kaynak": "ag", "Yol": "title" }, { "Kaynak": "ld", "Yol": "name" },
+        { "Kaynak": "html", "Secici": "h1.proName" }, { "Kaynak": "html", "Secici": "h1.proName", "Nitelik": "title" }, { "Kaynak": "html", "Secici": "h1" },
+        { "Kaynak": "html", "Secici": "meta[property='og:title']", "Nitelik": "content" }
+      ],
+      "Marka": [ { "Kaynak": "next", "Yol": "brand.name" }, { "Kaynak": "ld", "Yol": "brand.name" }, { "Kaynak": "ld", "Yol": "brand" }, { "Kaynak": "html", "Secici": "div.unf-p-brand a, a.unf-p-brand" } ],
+      "Aciklama": [ { "Kaynak": "next", "Yol": "description" }, { "Kaynak": "ld", "Yol": "description" }, { "Kaynak": "html", "Secici": "div.unf-info-desc", "Nitelik": "html" } ],
+
+      "UrunPuani": [ { "Kaynak": "next", "Yol": "rating" }, { "Kaynak": "ld", "Yol": "aggregateRating.ratingValue" }, { "Kaynak": "html", "Secici": "div.ratingCont strong" } ],
+      "DegerlendirmeSayisi": [ { "Kaynak": "ld", "Yol": "aggregateRating.ratingCount" }, { "Kaynak": "html", "Secici": "a.reviewNum, span.reviewNum" } ],
+      "YorumSayisi": [ { "Kaynak": "next", "Yol": "reviewCount" }, { "Kaynak": "ld", "Yol": "aggregateRating.reviewCount" } ],
+      "FavoriSayisi": [ { "Kaynak": "html", "Secici": "span.favoriteCount" } ],
+
+      "SatisFiyati": [
+        { "Kaynak": "next", "Yol": "price.salePrice" }, { "Kaynak": "next", "Yol": "displayPrice" }, { "Kaynak": "ag", "Yol": "displayPrice" },
+        { "Kaynak": "ld", "Yol": "offers.price" }, { "Kaynak": "ld", "Yol": "offers[0].price" }, { "Kaynak": "ld", "Yol": "offers.lowPrice" }, { "Kaynak": "ld", "Yol": "offers[0].price" },
+        { "Kaynak": "html", "Secici": "div.unf-p-left div.newPrice ins" }, { "Kaynak": "html", "Secici": "div.newPrice ins" },
+        { "Kaynak": "html", "Secici": "div.newPrice ins", "Nitelik": "content" }
+      ],
+      "FiyatMetni": [ { "Kaynak": "html", "Secici": "div.unf-p-left div.newPrice ins" }, { "Kaynak": "html", "Secici": "div.newPrice ins" } ],
+      "ListeFiyati": [ { "Kaynak": "next", "Yol": "price.listPrice" }, { "Kaynak": "html", "Secici": "div.unf-p-left div.oldPrice del" }, { "Kaynak": "html", "Secici": "div.oldPrice del" } ],
+      "SepetteFiyat": [ { "Kaynak": "html", "Secici": "div.unf-p-left .basket-price, .unf-basket-price" } ],
+      "IndirimOrani": [ { "Kaynak": "html", "Secici": "div.unf-p-left div.ratio, span.ratio" } ],
+      "ParaBirimi": [ { "Kaynak": "ld", "Yol": "offers.priceCurrency" }, { "Kaynak": "ld", "Yol": "offers[0].priceCurrency" }, { "Kaynak": "ld", "Yol": "offers[0].priceCurrency" } ],
+      "TaksitBilgisi": [ { "Kaynak": "html", "Secici": "div.unf-p-installment, .installmentText" } ],
+
+      "KargoUcreti": [ { "Kaynak": "next", "Yol": "shipping.price" }, { "Kaynak": "html", "Secici": "div.unf-cargo .cargoPrice" } ],
+      "KargoBedavaMi": [ { "Kaynak": "next", "Yol": "freeShipping" }, { "Kaynak": "html", "Secici": "div.unf-p-left .freeShipping, span.cargoFree", "Nitelik": "var" } ],
+      "TahminiTeslimat": [ { "Kaynak": "html", "Secici": "div.unf-cargo .cargoTime, .shippingTime" } ],
+      "StokVar": [ { "Kaynak": "next", "Yol": "inStock" }, { "Kaynak": "ld", "Yol": "offers.availability", "DogruDegerler": [ "InStock", "LimitedAvailability" ] }, { "Kaynak": "ld", "Yol": "offers[0].availability", "DogruDegerler": [ "InStock" ] } ],
+      "TukendiMi": [ { "Kaynak": "html", "Secici": "div.unf-p-soldOut, .soldOut, .outOfStock", "Nitelik": "var" } ],
+      "StokAdedi": [ { "Kaynak": "next", "Yol": "stock" } ],
+
+      "SaticiID": [ { "Kaynak": "next", "Yol": "seller.id" }, { "Kaynak": "ag", "Yol": "sellerId" } ],
+      "SaticiAdi": [
+        { "Kaynak": "next", "Yol": "seller.nickName" }, { "Kaynak": "ag", "Yol": "sellerNickName" }, { "Kaynak": "ld", "Yol": "offers.seller.name" }, { "Kaynak": "ld", "Yol": "offers[0].seller.name" }, { "Kaynak": "ld", "Yol": "offers[0].seller.name" },
+        { "Kaynak": "html", "Secici": "div.unf-p-right a.unf-p-seller-name" }, { "Kaynak": "html", "Secici": "div.unf-p-seller a.unf-p-seller-name" }, { "Kaynak": "html", "Secici": "a.unf-p-seller-name" }
+      ],
+      "SaticiPuani": [ { "Kaynak": "next", "Yol": "seller.rating" }, { "Kaynak": "html", "Secici": "div.unf-p-right div.shopPoint span.point" }, { "Kaynak": "html", "Secici": "div.shopPoint span.point" } ],
+      "SaticiLinki": [ { "Kaynak": "html", "Secici": "a.unf-p-seller-name", "Nitelik": "href" } ],
+      "ResmiMagazaMi": [ { "Kaynak": "html", "Secici": "div.unf-p-right .officialStore, .unf-p-seller .official", "Nitelik": "var" } ]
+    },
+
+    "Listeler": {
+      "Gorseller": {
+        "Adaylar": [ { "Kaynak": "next", "Yol": "images" }, { "Kaynak": "ld", "Yol": "image" }, { "Kaynak": "html", "Secici": "div.imgObj a, div.unf-p-img-box img" } ],
+        "Alanlar": { "Url": [ { "Yol": "url" }, { "Yol": "$" }, { "Secici": "", "Nitelik": "data-full" }, { "Secici": "", "Nitelik": "href" }, { "Secici": "", "Nitelik": "data-src" }, { "Secici": "", "Nitelik": "src" } ] }
+      },
+      "KategoriYolu": {
+        "Adaylar": [ { "Kaynak": "ldBreadcrumb", "Yol": "itemListElement" }, { "Kaynak": "html", "Secici": "div#breadCrumb li a, ul.breadcrumb li a" } ],
+        "Alanlar": { "Ad": [ { "Yol": "name" }, { "Yol": "item.name" }, { "Secici": "" } ] }
+      },
+      "Ozellikler": {
+        "Adaylar": [ { "Kaynak": "next", "Yol": "attributes" }, { "Kaynak": "html", "Secici": "div.unf-prop-list li, ul.unf-prop-list li" } ],
+        "Alanlar": {
+          "Anahtar": [ { "Yol": "name" }, { "Secici": "p.unf-prop-list-title, .unf-prop-list-title" } ],
+          "Deger": [ { "Yol": "value" }, { "Secici": "p.unf-prop-list-prop, .unf-prop-list-prop" } ]
+        }
+      },
+      "Varyantlar": {
+        "Adaylar": [ { "Kaynak": "next", "Yol": "variants" }, { "Kaynak": "html", "Secici": "div.unf-attribute-option, div.skuProp li" } ],
+        "Alanlar": {
+          "Ozellik": [ { "Yol": "attributeName" }, { "Secici": "", "Nitelik": "data-attribute-name" } ],
+          "Deger": [ { "Yol": "attributeValue" }, { "Secici": "", "Nitelik": "data-value" }, { "Secici": "" } ],
+          "VaryantID": [ { "Yol": "id" }, { "Secici": "", "Nitelik": "data-sku" } ],
+          "Fiyat": [ { "Yol": "price" } ],
+          "StokVar": [ { "Yol": "inStock" } ],
+          "SeciliMi": [ { "Yol": "selected" }, { "Secici": "", "Nitelik": "class", "DogruDegerler": [ "selected", "active" ] } ]
+        }
+      },
+      "Kampanyalar": {
+        "Adaylar": [ { "Kaynak": "html", "Secici": "div.unf-p-campaign span, div.campaignInfo" } ],
+        "Alanlar": { "Metin": [ { "Secici": "" } ] }
+      },
+      "DigerSaticilar": {
+        "Adaylar": [
+          { "Kaynak": "next", "Yol": "otherSellers" },
+          { "Kaynak": "htmlEk", "Secici": "div.unf-sell.unf-section div.unf-cmp-body", "TumKokler": true },
+          { "Kaynak": "ld", "Yol": "offers.offers" }
+        ],
+        "Alanlar": {
+          "SaticiID": [ { "Yol": "sellerId" } ],
+          "SaticiAdi": [ { "Yol": "sellerNickName" }, { "Yol": "seller.name" }, { "Secici": "a.b-n-title" } ],
+          "SaticiPuani": [ { "Yol": "sellerRating" }, { "Secici": "span.point" } ],
+          "SaticiLinki": [ { "Secici": "a.b-n-title", "Nitelik": "href" } ],
+          "SatisFiyati": [ { "Yol": "price" }, { "Secici": "span.b-p-new" }, { "Secici": "ins" } ],
+          "FiyatMetni": [ { "Secici": "span.b-p-new" } ],
+          "ListeFiyati": [ { "Secici": "span.b-p-old, del" } ],
+          "KargoBedavaMi": [ { "Yol": "freeShipping" }, { "Secici": ".cargoFree, .freeShipping", "Nitelik": "var", "YoksaDeger": "false" } ],
+          "TahminiTeslimat": [ { "Secici": ".cargoTime, .shippingTime" } ],
+          "StokVar": [ { "Yol": "availability", "DogruDegerler": [ "InStock" ] } ]
+        }
+      }
+    }
+  }
+}
